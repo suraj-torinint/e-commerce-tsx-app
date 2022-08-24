@@ -1,6 +1,29 @@
 import React from "react";
+import { useState } from "react";
 
-const ProductCard: React.FC<{ id: number; image: string; title: string; desc: string; price: string; width: string; height: string }> = (props) => {
+localStorage.setItem("cart", "0");
+const ProductCard: React.FC<{
+    setCart: (cart: number) => void;
+    id: number;
+    image: string;
+    title: string;
+    desc: string;
+    price: string;
+    width: string;
+    height: string;
+}> = (props) => {
+    const [btnDisabled, setBtnDisabled] = useState("");
+    const [cartIcon, setCartIcon] = useState(<i className="bi bi-cart"></i>);
+    const handleCart: React.MouseEventHandler = () => {
+        setBtnDisabled("disabled");
+        let totalCount = localStorage.getItem("cart");
+        let cartNum = (Number(totalCount) + 1).toString();
+        localStorage.setItem("cart", cartNum);
+        setCartIcon(<i className="bi bi-cart-check-fill"></i>);
+        // console.log(cartNum);
+        props.setCart(Number(cartNum));
+    };
+
     let width = props.width;
     let height = props.height;
     return (
@@ -55,8 +78,8 @@ const ProductCard: React.FC<{ id: number; image: string; title: string; desc: st
                                     </div>
                                 </div>
                             </div>
-                            <button className="col-sm-2 btn btn-default mx-3">
-                                <i className="bi bi-cart"></i>
+                            <button onClick={handleCart} className={`col-sm-2 btn btn-success mx-3 ${btnDisabled}`}>
+                                {cartIcon}
                             </button>
                             <button className="col-sm-2 btn btn-default">
                                 <i className="bi bi-heart"></i>

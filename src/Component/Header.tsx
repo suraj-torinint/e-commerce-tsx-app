@@ -1,4 +1,12 @@
-const Header = () => {
+import { useEffect, useState } from "react";
+
+const Header: React.FC<{ getCart: number }> = (props) => {
+    const [cart, setcart] = useState(0);
+    useEffect(() => {
+        let cartItem = Number(localStorage.getItem("cart"));
+        setcart(cartItem);
+    }, [props.getCart]);
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-info ">
@@ -24,6 +32,13 @@ const Header = () => {
                                 </a>
                             </li>
                         </ul>
+                    </div>
+                    <div>
+                        <span className="px-3">
+                            Cart
+                            {cart !== 0 ? <span className="ms-1 badge bg-danger">{cart}</span> : " "}
+                        </span>
+                        <span className="px-3">Wish List</span>
                     </div>
                 </div>
             </nav>
