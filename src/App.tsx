@@ -1,11 +1,20 @@
 import React from "react";
+import Header from "./Component/Header";
+import Products from "./Component/Products";
+import NewProduct from "./Component/NewProduct";
 
-function App() {
+const App = () => {
     return (
         <div>
-            <h1>Hello World</h1>
+            <Header />
+            <div className="container">
+                <div className="row">
+                    <Products />
+                </div>
+                <NewProduct />
+            </div>
         </div>
     );
-}
+};
 
 export default App;
