@@ -18,12 +18,20 @@ const App = () => {
         console.log(updatedData);
         setGetData(updatedData);
     };
+
+    const removeHandler = (id: number) => {
+        console.log(id);
+        setGetData((prevData) => {
+            return prevData.filter((item) => item.id !== id);
+        });
+    };
+
     return (
         <div>
             <Header getCart={cartItems} />
             <div className="container">
                 <div className="row">
-                    <Products setCart={setCart} getData={getData} />
+                    <Products setCart={setCart} getData={getData} removeClicked={removeHandler} />
                 </div>
                 <NewProduct onAddItem={handleFormData} />
             </div>
