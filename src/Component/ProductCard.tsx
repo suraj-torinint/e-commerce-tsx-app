@@ -2,16 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 localStorage.setItem("cart", "0");
-const ProductCard: React.FC<{
-    setCart: (cart: number) => void;
-    id: number;
-    image: string;
-    title: string;
-    desc: string;
-    price: string;
-    width: string;
-    height: string;
-}> = (props) => {
+const ProductCard: React.FC<{ setCart: (cart: number) => void; id: number; image: string; title: string; desc: string; price: string; width: string; height: string }> = (props) => {
     const [btnDisabled, setBtnDisabled] = useState("");
     const [cartIcon, setCartIcon] = useState(<i className="bi bi-cart"></i>);
     const handleCart: React.MouseEventHandler = () => {
@@ -24,14 +15,19 @@ const ProductCard: React.FC<{
         props.setCart(Number(cartNum));
     };
 
+    const [removeCard, setRemoveCard] = useState("col-sm-4 p-5")
+    const handleRemoveCard = () => {
+        setRemoveCard("d-none")
+    }
+
     let width = props.width;
     let height = props.height;
     return (
         <>
-            <div className="col-sm-4 p-5">
+            <div className={removeCard}>
                 <div className="card">
                     <div className="p-3">
-                        <button type="button" className="btn btn-secondary">
+                        <button onClick={handleRemoveCard} type="button" className="btn btn-secondary">
                             <i className="bi bi-x-lg"></i>
                             <span className="visually-hidden">Button</span>
                         </button>
