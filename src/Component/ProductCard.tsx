@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 localStorage.setItem("cart", "0");
-const ProductCard: React.FC<{ setCart: (cart: number) => void; id: number; image: string; title: string; desc: string; price: string; width: string; height: string }> = (props) => {
+const ProductCard: React.FC<{ setCart: (cart: number) => void; image: string; title: string; desc: string; price: string; width: string; height: string }> = (props) => {
     const [btnDisabled, setBtnDisabled] = useState("");
     const [cartIcon, setCartIcon] = useState(<i className="bi bi-cart"></i>);
     const handleCart: React.MouseEventHandler = () => {
