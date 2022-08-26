@@ -23,13 +23,7 @@ const ProductCard: React.FC<{
         // console.log(cartNum);
         props.setCart(Number(cartNum));
     };
-
-    // const [removeCard, setRemoveCard] = useState("col-sm-4 p-5");
-    // const handleRemoveCard = () => {
-    //     setRemoveCard("d-none");
-    //     props.removeBtnClicked;
-    // };
-
+    
     let width = props.width;
     let height = props.height;
     return (
