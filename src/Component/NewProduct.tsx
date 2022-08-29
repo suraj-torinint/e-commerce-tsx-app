@@ -10,8 +10,26 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
     const handleWidth = useRef<HTMLInputElement>(null);
     const handleHeight = useRef<HTMLInputElement>(null);
     const disabledRef = useRef<HTMLInputElement>(null);
-    const [isvalid, setIsValid] = useState(false);
+    // const [isvalid, setIsValid] = useState(false);
     const [touched, setTouched] = useState(false);
+
+    // valid
+    const validID = handleId.current?.value.length !== 0;
+    const validTitle = handleTitle.current?.value.length !== 0;
+    const validDesc = handleDesc.current?.value.length !== 0;
+    const validPrice = handlePrice.current?.value.length !== 0;
+    const validImage = handleImage.current?.value.length !== 0;
+    const validWidth = handleWidth.current?.value.length !== 0;
+    const validHeight = handleHeight.current?.value.length !== 0;
+
+    // Invalid
+    const invalidID = !validID && touched;
+    const invalidTitle = !validTitle && touched;
+    const invalidDesc = !validDesc && touched;
+    const invalidImage = !validImage && touched;
+    const invalidPrice = !validPrice && touched;
+    const invalidWidth = !validWidth && touched;
+    const invalidheight = !validHeight && touched;
 
     const clearForm = (event: React.FormEvent) => {
         event.preventDefault();
@@ -24,9 +42,52 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
         handleHeight.current!.value = "";
     };
 
+    const handleInputID = () => {
+        setTouched(true);
+        if (handleId.current?.value.length === 0) {
+            return invalidID;
+        }
+    };
+    const handleInputTitle = () => {
+        setTouched(true);
+        if (handleTitle.current?.value.length === 0) {
+            return invalidTitle;
+        }
+    };
+    const handleInputDesc = () => {
+        setTouched(true);
+        if (handleDesc.current?.value.length === 0) {
+            return invalidDesc;
+        }
+    };
+    const handleInputImage = () => {
+        setTouched(true);
+        if (handleImage.current?.value.length === 0) {
+            return invalidImage;
+        }
+    };
+    const handleInputPrice = () => {
+        setTouched(true);
+        if (handlePrice.current?.value.length === 0) {
+            return invalidPrice;
+        }
+    };
+    const handleInputWidth = () => {
+        setTouched(true);
+        if (handleWidth.current?.value.length === 0) {
+            return invalidWidth;
+        }
+    };
+    const handleInputHeight = () => {
+        setTouched(true);
+        if (handleHeight.current?.value.length === 0) {
+            return invalidheight;
+        }
+    };
+
     const handleForm = (event: React.FormEvent) => {
         event.preventDefault();
-        setTouched(true)
+        setTouched(true);
         if (
             handleId.current?.value.trim().length === 0 ||
             handleTitle.current?.value.trim().length === 0 ||
@@ -37,11 +98,9 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
             handleHeight.current?.value.trim().length === 0 ||
             disabledRef.current?.value.length === 0
         ) {
-            setIsValid(false);
-            return;
+            return [invalidID, invalidDesc, invalidImage, invalidPrice, invalidWidth, invalidTitle, invalidheight];
         }
-
-        setIsValid(true);
+        
         const newItem = {
             id: Number(handleId.current?.value),
             title: handleTitle.current!.value,
@@ -60,7 +119,7 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
         handleWidth.current!.value = "";
         handleHeight.current!.value = "";
 
-
+        setTouched(false);
     };
 
     return (
@@ -73,50 +132,50 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
                             <label htmlFor="inputId" className="form-label">
                                 Id
                             </label>
-                            <input ref={handleId} type="number" name="id" className="form-control" id="inputId" />
-                            {(!isvalid && touched) && <p className="text-danger">ID required</p>}
+                            <input onBlur={handleInputID} ref={handleId} type="number" name="id" className="form-control" id="inputId" />
+                            {invalidID && <p className="text-danger">ID required</p>}
                         </div>
                         <div className="col-md-5">
                             <label htmlFor="inputEmail4" className="form-label">
                                 Title
                             </label>
-                            <input ref={handleTitle} type="text" name="title" className="form-control" id="inputEmail4" />
-                            {(!isvalid && touched) && <p className="text-danger">title required</p>}
+                            <input onBlur={handleInputTitle} ref={handleTitle} type="text" name="title" className="form-control" id="inputEmail4" />
+                            {invalidTitle && <p className="text-danger">title required</p>}
                         </div>
                         <div className="col-md-5">
                             <label htmlFor="inputPassword4" className="form-label">
                                 Price
                             </label>
-                            <input ref={handlePrice} type="text" name="price" className="form-control" id="inputPassword4" />
-                            {(!isvalid && touched) && <p className="text-danger">Price required</p>}
+                            <input onBlur={handleInputPrice} ref={handlePrice} type="text" name="price" className="form-control" id="inputPassword4" />
+                            {invalidPrice && <p className="text-danger">Price required</p>}
                         </div>
                         <div className="">
                             <label htmlFor="exampleFormControlTextarea1" className="form-label">
                                 Description
                             </label>
-                            <textarea ref={handleDesc} name="desc" className="form-control" id="exampleFormControlTextarea1" rows={3}></textarea>
-                            {(!isvalid && touched) && <p className="text-danger">Add some Descriptin</p>}
+                            <textarea onBlur={handleInputDesc} ref={handleDesc} name="desc" className="form-control" id="exampleFormControlTextarea1" rows={3}></textarea>
+                            {invalidDesc && <p className="text-danger">Add some Descriptin</p>}
                         </div>
                         <div className="col-md-6">
                             <label htmlFor="inputCity" className="form-label">
                                 Image
                             </label>
-                            <input ref={handleImage} placeholder="Enter Image link" name="image" type="text" className="form-control" id="inputCity" />
-                            {(!isvalid && touched) && <p className="text-danger">Image link is required</p>}
+                            <input onBlur={handleInputImage} ref={handleImage} placeholder="Enter Image link" name="image" type="text" className="form-control" id="inputCity" />
+                            {invalidImage && <p className="text-danger">Image link is required</p>}
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="inputState" className="form-label">
                                 Width
                             </label>
-                            <input ref={handleWidth} type="text" name="width" className="form-control" id="inputState" />
-                            {(!isvalid && touched) && <p className="text-danger">Image Width is required</p>}
+                            <input onBlur={handleInputWidth} ref={handleWidth} type="text" name="width" className="form-control" id="inputState" />
+                            {invalidWidth && <p className="text-danger">Image Width is required</p>}
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="inputZip" className="form-label">
                                 Height
                             </label>
-                            <input ref={handleHeight} type="text" name="height" className="form-control" id="inputZip" />
-                            {(!isvalid && touched) && <p className="text-danger">Image height is required</p>}
+                            <input onBlur={handleInputHeight} ref={handleHeight} type="text" name="height" className="form-control" id="inputZip" />
+                            {invalidheight && <p className="text-danger">Image height is required</p>}
                         </div>
                         <div className="d-none">
                             <input type="text" value="React Test" ref={disabledRef} disabled />
