@@ -9,6 +9,18 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
     const handleDesc = useRef<HTMLTextAreaElement>(null);
     const handleWidth = useRef<HTMLInputElement>(null);
     const handleHeight = useRef<HTMLInputElement>(null);
+
+    const clearForm = (event: React.FormEvent) => {
+        event.preventDefault();
+        handleId.current!.value = "";
+        handleTitle.current!.value = "";
+        handleImage.current!.value = "";
+        handleDesc.current!.value = "";
+        handlePrice.current!.value = "";
+        handleWidth.current!.value = "";
+        handleHeight.current!.value = "";
+    };
+
     const handleForm = (event: React.FormEvent) => {
         event.preventDefault();
         const newItem = {
@@ -17,8 +29,8 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
             desc: handleDesc.current!.value,
             price: handlePrice.current!.value,
             image: handleImage.current!.value,
-            width: handleWidth.current!.value,
-            height: handleHeight.current!.value,
+            width: handleWidth.current!.value + "px",
+            height: handleHeight.current!.value + "px",
         };
         props.onAddItem([newItem]);
     };
@@ -57,7 +69,7 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
                             <label htmlFor="inputCity" className="form-label">
                                 Image
                             </label>
-                            <input ref={handleImage} name="image" type="file" className="form-control" id="inputCity" />
+                            <input ref={handleImage} placeholder="Enter Image link" name="image" type="text" className="form-control" id="inputCity" />
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="inputState" className="form-label">
@@ -76,7 +88,7 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
                             <button type="submit" /*onClick={submitForm}*/ className="btn btn-primary me-4">
                                 Submit
                             </button>
-                            <button type="submit" /*onClick={clearForm}*/ className="btn btn-primary">
+                            <button onClick={clearForm} className="btn btn-primary">
                                 Clear
                             </button>
                         </div>
