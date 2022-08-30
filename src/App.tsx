@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { Route } from "react-router-dom";
 import Header from "./Component/Header";
-import Products from "./Component/Products";
-import NewProduct from "./Component/NewProduct";
-import productData, { productType } from "./Data/ProductData";
+import Shop from "./Pages/Shop";
+import Cart from "./Pages/Cart";
+import Wishlist from "./Pages/Wishlist";
+import Home from "./Pages/Home";
+import Admin from "./Pages/Admin";
 
 const App = () => {
     const [cartItems, setCartItems] = useState(0);
@@ -10,31 +13,25 @@ const App = () => {
         setCartItems(cartItems);
     };
 
-    // debugger
-    const [getData, setGetData] = useState<productType[]>([...productData]);
-    const handleFormData = (obj: productType[]) => {
-        let updatedData = [...getData, ...obj];
-        console.log(typeof updatedData);
-        console.log(updatedData);
-        setGetData(updatedData);
-    };
-
-    const removeHandler = (id: number) => {
-        console.log(id);
-        setGetData((prevData) => {
-            return prevData.filter((item) => item.id !== id);
-        });
-    };
-
     return (
         <div>
             <Header getCart={cartItems} />
-            <div className="container">
-                <div className="row">
-                    <Products setCart={setCart} getData={getData} removeClicked={removeHandler} />
-                </div>
-                <NewProduct onAddItem={handleFormData} />
-            </div>
+            <Route exact path="/">
+                <Home setCart={setCart} />
+            </Route>
+            <Route exact path="/admin">
+                <Admin />
+            </Route>
+            <Route exact path="/shop">
+                <Shop />
+            </Route>
+
+            <Route exact path="/cart">
+                <Cart />
+            </Route>
+            <Route exact path="/wishlist">
+                <Wishlist />
+            </Route>
         </div>
     );
 };

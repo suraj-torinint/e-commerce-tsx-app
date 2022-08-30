@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header: React.FC<{ getCart: number }> = (props) => {
     const [cart, setcart] = useState(0);
@@ -15,34 +16,29 @@ const Header: React.FC<{ getCart: number }> = (props) => {
         <>
             <nav className="navbar navbar-expand-lg bg-info ">
                 <div className="container-fluid">
-                    <a className="text-dark navbar-brand" href="/">
+                    <Link className="text-dark navbar-brand" to="/">
                         Z-Kart
-                    </a>
+                    </Link>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <a className="text-dark nav-link active" aria-current="page" href="/">
-                                    Home
-                                </a>
+                                <Link className="text-dark nav-link active" aria-current="page" to="/shop">
+                                    Shop
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="text-dark nav-link" href="/">
-                                    Features
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="text-dark nav-link" href="/">
-                                    Pricing
-                                </a>
+                                <Link className="text-dark nav-link" to="/admin">
+                                    Admin
+                                </Link>
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <span className="px-3">
+                        <Link className="px-3 text-decoration-none text-dark" to="/cart">
                             Cart
                             {cart !== 0 ? <span className="ms-1 badge bg-danger">{cart}</span> : " "}
-                        </span>
-                        <span className="px-3">Wish List</span>
+                        </Link>
+                        <Link className="px-3 text-decoration-none text-dark" to="/wishlist">Wish List</Link>
                     </div>
                 </div>
             </nav>
