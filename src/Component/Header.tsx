@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Header: React.FC<{ getCart: number }> = (props) => {
     const [cart, setcart] = useState(0);
@@ -16,29 +16,29 @@ const Header: React.FC<{ getCart: number }> = (props) => {
         <>
             <nav className="navbar navbar-expand-lg bg-info ">
                 <div className="container-fluid">
-                    <Link className="text-dark navbar-brand" to="/">
+                    <NavLink className="text-dark navbar-brand" to="/">
                         Z-Kart
-                    </Link>
+                    </NavLink>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link className="text-dark nav-link active" aria-current="page" to="/shop">
+                                <NavLink className="text-dark nav-link active" aria-current="page" to="/shop">
                                     Shop
-                                </Link>
+                                </NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link className="text-dark nav-link" to="/admin">
+                                <NavLink className="text-dark nav-link" to="/admin">
                                     Admin
-                                </Link>
+                                </NavLink>
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <Link className="px-3 text-decoration-none text-dark" to="/cart">
+                        <NavLink className="px-3 text-decoration-none text-dark" to="/cart">
                             Cart
                             {cart !== 0 ? <span className="ms-1 badge bg-danger">{cart}</span> : " "}
-                        </Link>
-                        <Link className="px-3 text-decoration-none text-dark" to="/wishlist">Wish List</Link>
+                        </NavLink>
+                        <NavLink className="px-3 text-decoration-none text-dark" to="/wishlist">Wish List</NavLink>
                     </div>
                 </div>
             </nav>
