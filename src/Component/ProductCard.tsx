@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 localStorage.setItem("cart", "0");
 const ProductCard: React.FC<{
     removeBtnClicked: () => void;
     setCart: (cart: number) => void;
+    id: number;
     image: string;
     title: string;
     desc: string;
@@ -23,7 +25,7 @@ const ProductCard: React.FC<{
         // console.log(cartNum);
         props.setCart(Number(cartNum));
     };
-    
+
     let width = props.width;
     let height = props.height;
     return (
@@ -37,12 +39,19 @@ const ProductCard: React.FC<{
                         </button>
                     </div>
                     <div className="text-center">
-                        <img src={props.image} className="card-img-top img-thumbnail" style={{ width: width, height: height }} alt="..." />
+                        <Link to={`/shop/${props.id}`}>
+                            <img src={props.image} className="card-img-top img-thumbnail" style={{ width: width, height: height }} alt="..." />
+                        </Link>
                     </div>
                     <div className="card-body">
                         <div className="px-1 row">
-                            <h5 className="card-title fw-bold col">{props.title}</h5>
-                            <h5 className="card-title col-lg-4 justify-content-end">₹ {props.price}</h5>
+                            <h5 className="card-title  col">
+                                <Link to={`/shop/${props.id}`} className={"text-decoration-none fw-bold text-dark"}>{props.title}</Link>
+                            </h5>
+
+                            <h5 className="card-title col-lg-4 justify-content-end">
+                                <Link to={`/shop/${props.id}`} className={"text-decoration-none text-dark"}>₹ {props.price}</Link>
+                            </h5>
                         </div>
                         <p className="card-text ps-1">
                             Assured Product <br /> Ready to Deliver

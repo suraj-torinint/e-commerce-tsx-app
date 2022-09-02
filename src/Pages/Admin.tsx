@@ -1,20 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import NewProduct from "../Component/NewProduct";
-import productData, { productType } from "../Data/ProductData";
+import { productType } from "../Data/ProductData";
 
-const Admin = () => {
-    // debugger
-    const [getData, setGetData] = useState<productType[]>([...productData]);
-    const handleFormData = (obj: productType[]) => {
-        let updatedData = [...getData, ...obj];
-        console.log(typeof updatedData);
-        console.log(updatedData);
-        setGetData(updatedData);
-    };
+const Admin: React.FC<{ updatedData: (obj:productType[]) => void }> = (props) => {
 
     return (
         <div className="container">
-            <NewProduct onAddItem={handleFormData} />
+            <NewProduct onAddItem={props.updatedData} />
         </div>
     );
 };
