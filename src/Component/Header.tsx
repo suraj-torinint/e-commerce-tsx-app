@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import ProductContext from "../Context/product-data";
 
-const Header: React.FC<{ getCart: number }> = (props) => {
+const Header = () => {
+    const cartNumber = useContext(ProductContext);
     const [cart, setcart] = useState(0);
     useEffect(() => {
         console.log("Mounted");
-        setcart(props.getCart);
+        setcart(cartNumber.cartData);
         return () => {
             console.log("Unmounted");
         };
-    }, [props.getCart]);
+    }, [cartNumber.cartData]);
 
     return (
         <>
@@ -37,7 +39,9 @@ const Header: React.FC<{ getCart: number }> = (props) => {
                             Cart
                             {cart !== 0 ? <span className="ms-1 badge bg-danger">{cart}</span> : " "}
                         </NavLink>
-                        <NavLink className="px-3 text-decoration-none text-dark" to="/wishlist">Wish List</NavLink>
+                        <NavLink className="px-3 text-decoration-none text-dark" to="/wishlist">
+                            Wish List
+                        </NavLink>
                     </div>
                 </div>
             </nav>

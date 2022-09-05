@@ -1,12 +1,10 @@
-import React from "react";
 import NewProduct from "../Component/NewProduct";
-import { productType } from "../Data/ProductData";
 
-const Admin: React.FC<{ updatedData: (obj:productType[]) => void }> = (props) => {
+const Admin = () => {
 
     return (
         <div className="container">
-            <NewProduct onAddItem={props.updatedData} />
+            <NewProduct />
         </div>
     );
 };
