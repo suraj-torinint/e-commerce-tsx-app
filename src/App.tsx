@@ -9,6 +9,7 @@ import Admin from "./Pages/Admin";
 import ProductDetail from "./Pages/ProductDetail";
 import productData, { productType } from "./Data/ProductData";
 import NOtFound from "./Pages/NOtFound";
+import ProductContext from "./Context/product-data";
 
 const App = () => {
     const [cartItems, setCartItems] = useState(0);
@@ -31,17 +32,17 @@ const App = () => {
     };
 
     return (
-        <div>
-            <Header getCart={cartItems} />
+        <ProductContext.Provider value={{ data: getData, cartData: cartItems, onRemoveHandler:handleRemove, updatedData:setData, setcart:setCart }}>
+            <Header/>
             <Switch>
                 <Route exact path="/">
-                    <Home setCart={setCart} newData={getData} onRemove={handleRemove} />
+                    <Home />
                 </Route>
                 <Route exact path="/admin">
-                    <Admin updatedData={setData} />
+                    <Admin />
                 </Route>
                 <Route exact path="/shop">
-                    <Shop setCart={setCart} newData={getData} onRemove={handleRemove} />
+                    <Shop />
                 </Route>
 
                 <Route exact path="/cart">
@@ -51,13 +52,13 @@ const App = () => {
                     <Wishlist />
                 </Route>
                 <Route exact path="/shop/:productId">
-                    <ProductDetail newData={getData} />
+                    <ProductDetail/>
                 </Route>
                 <Route exact path="*">
                     <NOtFound />
                 </Route>
             </Switch>
-        </div>
+        </ProductContext.Provider>
     );
 };
 

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import CartItems from "../Component/CartItems";
-import productData, { productType } from "../Data/ProductData";
+import ProductContext from "../Context/product-data";
+import { productType } from "../Data/ProductData";
 
 localStorage.setItem("cart", JSON.stringify([]));
 const Cart = () => {
@@ -9,8 +10,9 @@ const Cart = () => {
     let items: productType[] = [];
     const [totalQuantity, setTotalQuantity] = useState(cartItems.length);
 
+    const updatedData = useContext(ProductContext)
     for (const iterator of cartItems) {
-        let element: productType[] = [productData.find((product) => product.id === iterator)!];
+        let element: productType[] = [updatedData.data.find((product) => product.id === iterator)!];
         items = [...items, ...element];
     }
 

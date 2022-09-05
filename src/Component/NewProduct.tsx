@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
-import { productType } from "../Data/ProductData";
+import React, { useContext, useRef, useState } from "react";
+import ProductContext from "../Context/product-data";
 
-const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props) => {
+const NewProduct = () => {
     const handleId = useRef<HTMLInputElement>(null);
     const handleTitle = useRef<HTMLInputElement>(null);
     const handleImage = useRef<HTMLInputElement>(null);
@@ -85,6 +85,8 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
         }
     };
 
+    const updatedData = useContext(ProductContext);
+
     const handleForm = (event: React.FormEvent) => {
         event.preventDefault();
         setTouched(true);
@@ -100,7 +102,7 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
         ) {
             return [invalidID, invalidDesc, invalidImage, invalidPrice, invalidWidth, invalidTitle, invalidheight];
         }
-        
+
         const newItem = {
             id: Number(handleId.current?.value),
             title: handleTitle.current!.value,
@@ -110,7 +112,7 @@ const NewProduct: React.FC<{ onAddItem: (obj: productType[]) => void }> = (props
             width: handleWidth.current!.value + "px",
             height: handleHeight.current!.value + "px",
         };
-        props.onAddItem([newItem]);
+        updatedData.updatedData([newItem]);
         handleId.current!.value = "";
         handleTitle.current!.value = "";
         handleImage.current!.value = "";

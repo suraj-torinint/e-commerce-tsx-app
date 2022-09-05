@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { productType } from "../Data/ProductData";
 import Details from "../Component/Details";
+import ProductContext from "../Context/product-data";
 
-const ProductDetail: React.FC<{ newData: productType[] }> = (props) => {
+const ProductDetail = () => {
     const params = useParams<{ productId: string }>();
-    const product = props.newData.find((product) => product.id === Number(params.productId));
+    const data = useContext(ProductContext)
+    const product = data.data.find((product) => product.id === Number(params.productId));
     // console.log(product);
     return (
         <>
