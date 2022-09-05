@@ -8,6 +8,7 @@ import Home from "./Pages/Home";
 import Admin from "./Pages/Admin";
 import ProductDetail from "./Pages/ProductDetail";
 import productData, { productType } from "./Data/ProductData";
+import NOtFound from "./Pages/NOtFound";
 
 const App = () => {
     const [cartItems, setCartItems] = useState(0);
@@ -51,6 +52,9 @@ const App = () => {
                 </Route>
                 <Route exact path="/shop/:productId">
                     <ProductDetail newData={getData} />
+                </Route>
+                <Route exact path="*">
+                    <NOtFound />
                 </Route>
             </Switch>
         </div>

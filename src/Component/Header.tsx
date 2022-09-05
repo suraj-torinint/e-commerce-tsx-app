@@ -5,8 +5,7 @@ const Header: React.FC<{ getCart: number }> = (props) => {
     const [cart, setcart] = useState(0);
     useEffect(() => {
         console.log("Mounted");
-        let cartItem = Number(localStorage.getItem("cart"));
-        setcart(cartItem);
+        setcart(props.getCart);
         return () => {
             console.log("Unmounted");
         };
