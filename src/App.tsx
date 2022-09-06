@@ -10,6 +10,7 @@ import ProductDetail from "./Pages/ProductDetail";
 import productData, { productType } from "./Data/ProductData";
 import NOtFound from "./Pages/NOtFound";
 import ProductContext from "./Context/product-data";
+import ErrorBoundary from "./Component/ErrorBoundary";
 
 const App = () => {
     const [cartItems, setCartItems] = useState(0);
@@ -32,32 +33,34 @@ const App = () => {
     };
 
     return (
-        <ProductContext.Provider value={{ data: getData, cartData: cartItems, onRemoveHandler:handleRemove, updatedData:setData, setcart:setCart }}>
-            <Header/>
-            <Switch>
-                <Route exact path="/">
-                    <Home />
-                </Route>
-                <Route exact path="/admin">
-                    <Admin />
-                </Route>
-                <Route exact path="/shop">
-                    <Shop />
-                </Route>
+        <ProductContext.Provider value={{ data: getData, cartData: cartItems, onRemoveHandler: handleRemove, updatedData: setData, setcart: setCart }}>
+            <ErrorBoundary>
+                <Header />
+                <Switch>
+                    <Route exact path="/">
+                        <Home />
+                    </Route>
+                    <Route exact path="/admin">
+                        <Admin />
+                    </Route>
+                    <Route exact path="/shop">
+                        <Shop />
+                    </Route>
 
-                <Route exact path="/cart">
-                    <Cart />
-                </Route>
-                <Route exact path="/wishlist">
-                    <Wishlist />
-                </Route>
-                <Route exact path="/shop/:productId">
-                    <ProductDetail/>
-                </Route>
-                <Route exact path="*">
-                    <NOtFound />
-                </Route>
-            </Switch>
+                    <Route exact path="/cart">
+                        <Cart />
+                    </Route>
+                    <Route exact path="/wishlist">
+                        <Wishlist />
+                    </Route>
+                    <Route exact path="/shop/:productId">
+                        <ProductDetail />
+                    </Route>
+                    <Route exact path="*">
+                        <NOtFound />
+                    </Route>
+                </Switch>
+            </ErrorBoundary>
         </ProductContext.Provider>
     );
 };
