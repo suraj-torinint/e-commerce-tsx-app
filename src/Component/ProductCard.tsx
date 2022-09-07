@@ -2,32 +2,25 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-localStorage.setItem("cart", "0");
-const ProductCard: React.FC<{
-    removeBtnClicked: () => void;
-    setCart: (cart: number) => void;
-    id: number;
-    image: string;
-    title: string;
-    desc: string;
-    price: string;
-    width: string;
-    height: string;
-}> = (props) => {
+let itemArray: number[] = [];
+const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: number) => void; id: number; image: string; title: string; desc: string; price: string; width: string; height: string }> = (props) => {
     const [btnDisabled, setBtnDisabled] = useState("");
     const [cartIcon, setCartIcon] = useState(<i className="bi bi-cart"></i>);
+
     const handleCart: React.MouseEventHandler = () => {
         setBtnDisabled("disabled");
-        let totalCount = localStorage.getItem("cart");
-        let cartNum = (Number(totalCount) + 1).toString();
-        localStorage.setItem("cart", cartNum);
+        let totalCount = itemArray.length + 1;
+        let cartNum = totalCount;
         setCartIcon(<i className="bi bi-cart-check-fill"></i>);
-        // console.log(cartNum);
-        props.setCart(Number(cartNum));
+        itemArray.push(props.id);
+        localStorage.setItem("cart", JSON.stringify(itemArray));
+        // console.log(totalCount);
+        props.setCart(cartNum);
     };
 
     let width = props.width;
     let height = props.height;
+
     return (
         <>
             <div className={"col-sm-4 p-5"}>
@@ -46,11 +39,15 @@ const ProductCard: React.FC<{
                     <div className="card-body">
                         <div className="px-1 row">
                             <h5 className="card-title  col">
-                                <Link to={`/shop/${props.id}`} className={"text-decoration-none fw-bold text-dark"}>{props.title}</Link>
+                                <Link to={`/shop/${props.id}`} className={"text-decoration-none fw-bold text-dark"}>
+                                    {props.title}
+                                </Link>
                             </h5>
 
                             <h5 className="card-title col-lg-4 justify-content-end">
-                                <Link to={`/shop/${props.id}`} className={"text-decoration-none text-dark"}>₹ {props.price}</Link>
+                                <Link to={`/shop/${props.id}`} className={"text-decoration-none text-dark"}>
+                                    ₹ {props.price}
+                                </Link>
                             </h5>
                         </div>
                         <p className="card-text ps-1">
@@ -87,10 +84,10 @@ const ProductCard: React.FC<{
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={handleCart} className={`col-sm-2 btn btn-success mx-3 ${btnDisabled}`}>
+                            <button type="button" onClick={handleCart} className={`col-sm-2 btn btn-success mx-3 ${btnDisabled}`}>
                                 {cartIcon}
                             </button>
-                            <button className="col-sm-2 btn btn-default">
+                            <button type="button" title="wishlist" className="col-sm-2 btn btn-default">
                                 <i className="bi bi-heart"></i>
                             </button>
                         </div>
