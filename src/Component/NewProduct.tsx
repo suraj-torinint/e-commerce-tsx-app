@@ -5,10 +5,10 @@ const NewProduct = () => {
     const handleId = useRef<HTMLInputElement>(null);
     const handleTitle = useRef<HTMLInputElement>(null);
     const handleImage = useRef<HTMLInputElement>(null);
-    const handlePrice = useRef<HTMLInputElement>(null);
     const handleDesc = useRef<HTMLTextAreaElement>(null);
-    const handleWidth = useRef<HTMLInputElement>(null);
-    const handleHeight = useRef<HTMLInputElement>(null);
+    const handlePrice = useRef<HTMLInputElement>(null);
+    const handleRating = useRef<HTMLInputElement>(null);
+    const handleCategory = useRef<HTMLInputElement>(null);
     const disabledRef = useRef<HTMLInputElement>(null);
     // const [isvalid, setIsValid] = useState(false);
     const [touched, setTouched] = useState(false);
@@ -19,8 +19,8 @@ const NewProduct = () => {
     const validDesc = handleDesc.current?.value.length !== 0;
     const validPrice = handlePrice.current?.value.length !== 0;
     const validImage = handleImage.current?.value.length !== 0;
-    const validWidth = handleWidth.current?.value.length !== 0;
-    const validHeight = handleHeight.current?.value.length !== 0;
+    const validRating = handleRating.current?.value.length !== 0;
+    const validCategory = handleCategory.current?.value.length !== 0;
 
     // Invalid
     const invalidID = !validID && touched;
@@ -28,8 +28,8 @@ const NewProduct = () => {
     const invalidDesc = !validDesc && touched;
     const invalidImage = !validImage && touched;
     const invalidPrice = !validPrice && touched;
-    const invalidWidth = !validWidth && touched;
-    const invalidheight = !validHeight && touched;
+    const invalidRating = !validRating && touched;
+    const invalidCategory = !validCategory && touched;
 
     const clearForm = (event: React.FormEvent) => {
         event.preventDefault();
@@ -38,8 +38,8 @@ const NewProduct = () => {
         handleImage.current!.value = "";
         handleDesc.current!.value = "";
         handlePrice.current!.value = "";
-        handleWidth.current!.value = "";
-        handleHeight.current!.value = "";
+        handleRating.current!.value = "";
+        handleCategory.current!.value = "";
     };
 
     const handleInputID = () => {
@@ -72,16 +72,16 @@ const NewProduct = () => {
             return invalidPrice;
         }
     };
-    const handleInputWidth = () => {
+    const handleInputRating = () => {
         setTouched(true);
-        if (handleWidth.current?.value.length === 0) {
-            return invalidWidth;
+        if (handleRating.current?.value.length === 0) {
+            return invalidRating;
         }
     };
-    const handleInputHeight = () => {
+    const handleInputCategory = () => {
         setTouched(true);
-        if (handleHeight.current?.value.length === 0) {
-            return invalidheight;
+        if (handleCategory.current?.value.length === 0) {
+            return invalidCategory;
         }
     };
 
@@ -96,21 +96,21 @@ const NewProduct = () => {
             handleImage.current?.value.trim().length === 0 ||
             handlePrice.current?.value.trim().length === 0 ||
             handleDesc.current?.value.trim().length === 0 ||
-            handleWidth.current?.value.trim().length === 0 ||
-            handleHeight.current?.value.trim().length === 0 ||
+            handleRating.current?.value.trim().length === 0 ||
+            handleCategory.current?.value.trim().length === 0 ||
             disabledRef.current?.value.length === 0
         ) {
-            return [invalidID, invalidDesc, invalidImage, invalidPrice, invalidWidth, invalidTitle, invalidheight];
+            return [invalidID, invalidDesc, invalidImage, invalidPrice, invalidRating, invalidTitle, invalidCategory];
         }
 
         const newItem = {
             id: Number(handleId.current?.value),
             title: handleTitle.current!.value,
-            desc: handleDesc.current!.value,
-            price: handlePrice.current!.value,
+            description: handleDesc.current!.value,
             image: handleImage.current!.value,
-            width: handleWidth.current!.value + "px",
-            height: handleHeight.current!.value + "px",
+            price: Number(handlePrice.current!.value),
+            rating: { rate: Number(handleRating.current!.value) },
+            category: handleCategory.current!.value,
         };
         updatedData.updatedData([newItem]);
         handleId.current!.value = "";
@@ -118,8 +118,8 @@ const NewProduct = () => {
         handleImage.current!.value = "";
         handleDesc.current!.value = "";
         handlePrice.current!.value = "";
-        handleWidth.current!.value = "";
-        handleHeight.current!.value = "";
+        handleRating.current!.value = "";
+        handleCategory.current!.value = "";
 
         setTouched(false);
     };
@@ -169,15 +169,15 @@ const NewProduct = () => {
                             <label htmlFor="inputState" className="form-label">
                                 Width
                             </label>
-                            <input onBlur={handleInputWidth} ref={handleWidth} type="text" name="width" className="form-control" id="inputState" />
-                            {invalidWidth && <p className="text-danger">Image Width is required</p>}
+                            <input onBlur={handleInputRating} ref={handleRating} type="text" name="width" className="form-control" id="inputState" />
+                            {invalidRating && <p className="text-danger">Image Width is required</p>}
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="inputZip" className="form-label">
                                 Height
                             </label>
-                            <input onBlur={handleInputHeight} ref={handleHeight} type="text" name="height" className="form-control" id="inputZip" />
-                            {invalidheight && <p className="text-danger">Image height is required</p>}
+                            <input onBlur={handleInputCategory} ref={handleCategory} type="text" name="height" className="form-control" id="inputZip" />
+                            {invalidCategory && <p className="text-danger">Image height is required</p>}
                         </div>
                         <div className="d-none">
                             <input type="text" value="React Test" ref={disabledRef} disabled />

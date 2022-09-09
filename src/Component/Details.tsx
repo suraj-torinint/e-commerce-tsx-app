@@ -1,6 +1,6 @@
 import React from "react";
 
-const Details: React.FC<{ title: string; price: string; desc: string; image: string }> = (props) => {
+const Details: React.FC<{ title: string; price: number; desc: string; image: string }> = (props) => {
     return (
         <>
             <div className="container">

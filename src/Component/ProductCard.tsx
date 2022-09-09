@@ -3,37 +3,37 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 let itemArray: number[] = [];
-const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: number) => void; id: number; image: string; title: string; desc: string; price: string; width: string; height: string }> = (props) => {
-    const [btnDisabled, setBtnDisabled] = useState("");
+const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: number) => void; id: number; image: string; title: string; desc: string; price: number; rating: { rate: number }; category: string }> = (props) => {
+    const [btnDisabled, setBtnDisabled] = useState<string>("");
     const [cartIcon, setCartIcon] = useState(<i className="bi bi-cart"></i>);
 
     const handleCart: React.MouseEventHandler = () => {
         setBtnDisabled("disabled");
         let totalCount = itemArray.length + 1;
-        let cartNum = totalCount;
+        // let cartNum = totalCount;
         setCartIcon(<i className="bi bi-cart-check-fill"></i>);
         itemArray.push(props.id);
         localStorage.setItem("cart", JSON.stringify(itemArray));
-        // console.log(totalCount);
-        props.setCart(cartNum);
+        console.log(totalCount);
+        props.setCart(totalCount);
     };
 
-    let width = props.width;
-    let height = props.height;
+    // let width = props.width;
+    // let height = props.height;
 
     return (
         <>
-            <div className={"col-sm-4 p-5"}>
+            <div className={"col g-5 px-5"}>
                 <div className="card">
-                    <div className="p-3">
+                    <div className="p-3 card-img-overlay">
                         <button onClick={props.removeBtnClicked} type="button" className="btn btn-secondary">
                             <i className="bi bi-x-lg"></i>
                             <span className="visually-hidden">Button</span>
                         </button>
                     </div>
                     <div className="text-center">
-                        <Link to={`/shop/${props.id}`}>
-                            <img src={props.image} className="card-img-top img-thumbnail" style={{ width: width, height: height }} alt="..." />
+                        <Link className="thumbnail" to={`/shop/${props.id}`}>
+                            <img src={props.image} className="card-img img-fluid p-3 w-50 h-50" /*style={{ width: width, height: height }}*/ alt="..." />
                         </Link>
                     </div>
                     <div className="card-body">
@@ -50,9 +50,10 @@ const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: numb
                                 </Link>
                             </h5>
                         </div>
-                        <p className="card-text ps-1">
-                            Assured Product <br /> Ready to Deliver
-                        </p>
+                        <div className="card-text ps-1">
+                            <div>{props.rating.rate} <i className="bi bi-star"></i></div>
+                            <div className="mb-2">{props.category}</div>
+                        </div>
                         <div className="row ps-3">
                             <button className="col-sm-5 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Show more
@@ -84,7 +85,7 @@ const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: numb
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" onClick={handleCart} className={`col-sm-2 btn btn-success mx-3 ${btnDisabled}`}>
+                            <button onClick={handleCart} className={`col-sm-2 btn btn-success mx-3 ${btnDisabled}`}>
                                 {cartIcon}
                             </button>
                             <button type="button" title="wishlist" className="col-sm-2 btn btn-default">

@@ -6,12 +6,12 @@ import ProductContext from "../Context/product-data";
 const ProductDetail = () => {
     const params = useParams<{ productId: string }>();
     const data = useContext(ProductContext)
-    const product = data.data.find((product) => product.id === Number(params.productId));
+    const product = data.bigdata.find((product) => product.id === Number(params.productId));
     // console.log(product);
     return (
         <>
             <div className="container my-5">
-                <Details key={product?.id} title={product!.title} price={product!.price} image={product!.image} desc={product!.desc} />
+                <Details key={product?.id} title={product!.title} price={product!.price} image={product!.image} desc={product!.description} />
             </div>
         </>
     );

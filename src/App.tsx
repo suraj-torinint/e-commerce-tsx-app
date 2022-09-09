@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Header from "./Component/Header";
 import Shop from "./Pages/Shop";
@@ -7,22 +7,29 @@ import Wishlist from "./Pages/Wishlist";
 import Home from "./Pages/Home";
 import Admin from "./Pages/Admin";
 import ProductDetail from "./Pages/ProductDetail";
-import productData, { productType } from "./Data/ProductData";
 import NOtFound from "./Pages/NOtFound";
 import ProductContext from "./Context/product-data";
 import ErrorBoundary from "./Component/ErrorBoundary";
+import StoreData, { storeDatatype } from "./Data/service";
 
 const App = () => {
+    const [itemData, setItemData] = useState<storeDatatype[]>([]);
+
+    useEffect(() => {
+        StoreData.getPosts().then((data) => {
+            setItemData(data);
+            // console.log(data)
+        });
+    }, []);
+
     const [cartItems, setCartItems] = useState(0);
     const setCart = (cartItems: number) => {
         setCartItems(cartItems);
     };
 
-    const [getData, setGetData] = useState<productType[]>([...productData]);
-    const setData = (obj: productType[]) => {
+    const [getData, setGetData] = useState<storeDatatype[]>([...itemData]);
+    const setData = (obj: storeDatatype[]) => {
         let updatedData = [...getData, ...obj];
-        console.log(typeof updatedData);
-        console.log(updatedData);
         setGetData(updatedData);
     };
 
@@ -33,7 +40,7 @@ const App = () => {
     };
 
     return (
-        <ProductContext.Provider value={{ data: getData, cartData: cartItems, onRemoveHandler: handleRemove, updatedData: setData, setcart: setCart }}>
+        <ProductContext.Provider value={{ bigdata: itemData, cartData: cartItems, onRemoveHandler: handleRemove, updatedData: setData, setcart: setCart }}>
             <ErrorBoundary>
                 <Header />
                 <Switch>

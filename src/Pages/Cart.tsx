@@ -2,17 +2,17 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import CartItems from "../Component/CartItems";
 import ProductContext from "../Context/product-data";
-import { productType } from "../Data/ProductData";
+import { storeDatatype } from "../Data/service";
 
 localStorage.setItem("cart", JSON.stringify([]));
 const Cart = () => {
     let cartItems = JSON.parse(localStorage.getItem("cart")!);
-    let items: productType[] = [];
+    let items: storeDatatype[] = [];
     const [totalQuantity, setTotalQuantity] = useState(cartItems.length);
 
     const updatedData = useContext(ProductContext)
     for (const iterator of cartItems) {
-        let element: productType[] = [updatedData.data.find((product) => product.id === iterator)!];
+        let element: storeDatatype[] = [updatedData.bigdata.find((product) => product.id === iterator)!];
         items = [...items, ...element];
     }
 
@@ -30,7 +30,7 @@ const Cart = () => {
     
     const handleDecrement = (quantity: number, price: number) => {
         setTotalQuantity((prevQuantity: number) => (prevQuantity !== cartItems.length && quantity > 1 ? prevQuantity - 1 : prevQuantity));
-        setTotalPrice((prevPrice) => (quantity > 1 ? prevPrice - price : prevPrice));
+        setTotalPrice((prevPrice) => (quantity > 1 ? prevPrice + price : prevPrice));
     };
 
     if (items.length === 0) {

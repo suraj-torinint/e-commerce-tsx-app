@@ -4,7 +4,7 @@ const CartItems: React.FC<{
     setIncrementQuantity: (quantity: number, price:number) => void;
     setDecermentQuantity: (quantity: number, price:number) => void;
     title: string;
-    price: string;
+    price: number;
     image: string;
 }> = (props) => {
     let QUANTITY = 1;
