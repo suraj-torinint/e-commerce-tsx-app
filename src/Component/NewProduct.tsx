@@ -1,5 +1,6 @@
-import React, { useContext, useRef, useState } from "react";
-import ProductContext from "../Context/product-data";
+import React, { useRef, useState } from "react";
+// import ProductContext from "../Context/product-data";
+import StoreData from "../Data/service";
 
 const NewProduct = () => {
     const handleId = useRef<HTMLInputElement>(null);
@@ -85,7 +86,7 @@ const NewProduct = () => {
         }
     };
 
-    const updatedData = useContext(ProductContext);
+    // const updatedData = useContext(ProductContext);
 
     const handleForm = (event: React.FormEvent) => {
         event.preventDefault();
@@ -112,7 +113,9 @@ const NewProduct = () => {
             rating: { rate: Number(handleRating.current!.value) },
             category: handleCategory.current!.value,
         };
-        updatedData.updatedData([newItem]);
+        StoreData.createPost(newItem);
+
+        // updatedData.updatedData([newItem]);
         handleId.current!.value = "";
         handleTitle.current!.value = "";
         handleImage.current!.value = "";
@@ -167,17 +170,17 @@ const NewProduct = () => {
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="inputState" className="form-label">
-                                Width
+                                Rating
                             </label>
-                            <input onBlur={handleInputRating} ref={handleRating} type="text" name="width" className="form-control" id="inputState" />
-                            {invalidRating && <p className="text-danger">Image Width is required</p>}
+                            <input onBlur={handleInputRating} ref={handleRating} type="text" name="rating" className="form-control" id="inputState" />
+                            {invalidRating && <p className="text-danger">Rating is required</p>}
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="inputZip" className="form-label">
-                                Height
+                                Category
                             </label>
-                            <input onBlur={handleInputCategory} ref={handleCategory} type="text" name="height" className="form-control" id="inputZip" />
-                            {invalidCategory && <p className="text-danger">Image height is required</p>}
+                            <input onBlur={handleInputCategory} ref={handleCategory} type="text" name="category" className="form-control" id="inputZip" />
+                            {invalidCategory && <p className="text-danger">Category is required</p>}
                         </div>
                         <div className="d-none">
                             <input type="text" value="React Test" ref={disabledRef} disabled />

@@ -33,14 +33,14 @@ const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: numb
                     </div>
                     <div className="card-img text-center">
                         <Link to={`/shop/${props.id}`}>
-                            <img src={props.image} className=" img-fluid px-3 w-50 h-50" /*style={{ width: width, height: height }}*/ alt="..." />
+                            <img src={props.image} className=" img-fluid px-3" style={{ height: "250px" }} alt="..." />
                         </Link>
                     </div>
                     <div className="card-body">
                         <div className="px-1 row">
                             <h5 className="card-title  col">
                                 <Link to={`/shop/${props.id}`} className={"text-decoration-none fw-bold text-dark"}>
-                                    {props.title}
+                                    {props.title.substring(0,15)}...
                                 </Link>
                             </h5>
 

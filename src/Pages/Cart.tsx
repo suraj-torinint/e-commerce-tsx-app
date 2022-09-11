@@ -30,7 +30,7 @@ const Cart = () => {
     
     const handleDecrement = (quantity: number, price: number) => {
         setTotalQuantity((prevQuantity: number) => (prevQuantity !== cartItems.length && quantity > 1 ? prevQuantity - 1 : prevQuantity));
-        setTotalPrice((prevPrice) => (quantity > 1 ? prevPrice + price : prevPrice));
+        setTotalPrice((prevPrice) => (quantity > 1 ? prevPrice - price : prevPrice));
     };
 
     if (items.length === 0) {
