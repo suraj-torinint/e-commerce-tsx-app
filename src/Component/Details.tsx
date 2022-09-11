@@ -8,7 +8,7 @@ const Details: React.FC<{ title: string; price: number; desc: string; image: str
                     <div className="row g-0">
                         <div className="col-sm-6 text-center">
                             <div className="">
-                                <img src={props.image} alt="..." />
+                                <img src={props.image} alt="..." className="w-50 h-50" />
                             </div>
                             <ul className="list-group list-group-horizontal mt-3 justify-content-center">
                                 <li className="list-group-item">

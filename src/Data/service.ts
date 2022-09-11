@@ -26,7 +26,7 @@ const requests = {
 
 const StoreData = {
     getPosts: (): Promise<storeDatatype[]> => requests.get("products"),
-    // getAPost: (id: number): Promise<storeDatatype> => requests.get(`product/${id}`),
+    getAPost: (id: number): Promise<storeDatatype> => requests.get(`products/${id}`),
     // createPost: (post: storeDatatype): Promise<storeDatatype> => requests.post("product", post),
     // updatePost: (post: storeDatatype, id: number): Promise<storeDatatype> => requests.put(`product/${id}`, post),
     // deletePost: (id: number): Promise<void> => requests.delete(`product/${id}`),

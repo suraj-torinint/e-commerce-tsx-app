@@ -25,15 +25,15 @@ const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: numb
         <>
             <div className={"col g-5 px-5"}>
                 <div className="card">
-                    <div className="p-3 card-img-overlay">
+                    <div className="ps-3 pt-3">
                         <button onClick={props.removeBtnClicked} type="button" className="btn btn-secondary">
                             <i className="bi bi-x-lg"></i>
                             <span className="visually-hidden">Button</span>
                         </button>
                     </div>
-                    <div className="text-center">
-                        <Link className="thumbnail" to={`/shop/${props.id}`}>
-                            <img src={props.image} className="card-img img-fluid p-3 w-50 h-50" /*style={{ width: width, height: height }}*/ alt="..." />
+                    <div className="card-img text-center">
+                        <Link to={`/shop/${props.id}`}>
+                            <img src={props.image} className=" img-fluid px-3 w-50 h-50" /*style={{ width: width, height: height }}*/ alt="..." />
                         </Link>
                     </div>
                     <div className="card-body">
