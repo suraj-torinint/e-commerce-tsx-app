@@ -14,10 +14,12 @@ import StoreData, { storeDatatype } from "./Data/service";
 
 const App = () => {
     const [itemData, setItemData] = useState<storeDatatype[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         StoreData.getPosts().then((data) => {
             setItemData(data);
+            setLoading(false)
             // console.log(data)
         });
     }, []);
@@ -40,7 +42,7 @@ const App = () => {
     };
 
     return (
-        <ProductContext.Provider value={{ bigdata: itemData, cartData: cartItems, onRemoveHandler: handleRemove, updatedData: setData, setcart: setCart }}>
+        <ProductContext.Provider value={{ onload:loading, bigdata: itemData, cartData: cartItems, onRemoveHandler: handleRemove, updatedData: setData, setcart: setCart }}>
             <ErrorBoundary>
                 <Header />
                 <Switch>
