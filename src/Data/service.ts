@@ -15,7 +15,7 @@ export interface cartDataType {
 }
 
 const instance = axios.create({
-    baseURL: "http://localhost:8000/",
+    baseURL: process.env.REACT_APP_BASE_URL ,
     timeout: 5000,
 });
 

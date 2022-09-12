@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import ProductContext from "../Context/product-data";
 import ProductCard from "./ProductCard";
 import Spinner from "./Spinner";
