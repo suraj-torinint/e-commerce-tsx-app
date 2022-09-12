@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import StoreData from "../Data/service";
 
 let itemArray: number[] = [];
 const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: number) => void; id: number; image: string; title: string; desc: string; price: number; rating: { rate: number }; category: string }> = (props) => {
@@ -10,6 +11,8 @@ const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: numb
     const handleCart: React.MouseEventHandler = () => {
         setBtnDisabled("disabled");
         let totalCount = itemArray.length + 1;
+        // cart post method
+        StoreData.postCart({ id: props.id });
         // let cartNum = totalCount;
         setCartIcon(<i className="bi bi-cart-check-fill"></i>);
         itemArray.push(props.id);
@@ -40,7 +43,7 @@ const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: numb
                         <div className="px-1 row">
                             <h5 className="card-title  col">
                                 <Link to={`/shop/${props.id}`} className={"text-decoration-none fw-bold text-dark"}>
-                                    {props.title.substring(0,15)}...
+                                    {props.title.substring(0, 15)}...
                                 </Link>
                             </h5>
 
@@ -51,7 +54,9 @@ const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: numb
                             </h5>
                         </div>
                         <div className="card-text ps-1">
-                            <div>{props.rating.rate} <i className="bi bi-star"></i></div>
+                            <div>
+                                {props.rating.rate} <i className="bi bi-star"></i>
+                            </div>
                             <div className="mb-2">{props.category}</div>
                         </div>
                         <div className="row ps-3">

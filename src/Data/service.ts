@@ -6,8 +6,12 @@ export interface storeDatatype {
     description: string;
     price: number;
     image: string;
-    rating: {rate:number};
+    rating: { rate: number };
     category: string;
+}
+
+export interface cartDataType {
+    id: number;
 }
 
 const instance = axios.create({
@@ -21,7 +25,7 @@ const requests = {
     get: (url: string) => instance.get(url).then(responseBody),
     post: (url: string, body: {}) => instance.post(url, body).then(responseBody),
     // put: (url: string, body: {}) => instance.put(url, body).then(responseBody),
-    // delete: (url: string) => instance.delete(url).then(responseBody),
+    delete: (url: string) => instance.delete(url).then(responseBody),
 };
 
 const StoreData = {
@@ -30,6 +34,9 @@ const StoreData = {
     createPost: (post: storeDatatype): Promise<storeDatatype> => requests.post("products", post),
     // updatePost: (post: storeDatatype, id: number): Promise<storeDatatype> => requests.put(`product/${id}`, post),
     // deletePost: (id: number): Promise<void> => requests.delete(`product/${id}`),
+    getCart: (): Promise<cartDataType[]> => requests.get("cart"),
+    postCart: (cart: cartDataType): Promise<cartDataType[]> => requests.post("cart", cart),
+    deleteCart: (id: number): Promise<void> => requests.delete(`cart/${id}`),
 };
 
 export default StoreData;

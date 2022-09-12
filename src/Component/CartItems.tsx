@@ -1,11 +1,13 @@
 import React, { Fragment, useState } from "react";
 
 const CartItems: React.FC<{
-    setIncrementQuantity: (quantity: number, price:number) => void;
-    setDecermentQuantity: (quantity: number, price:number) => void;
+    onRemoveCart: (id: number) => void;
+    setIncrementQuantity: (quantity: number, price: number) => void;
+    setDecermentQuantity: (quantity: number, price: number) => void;
     title: string;
     price: number;
     image: string;
+    id: number;
 }> = (props) => {
     let QUANTITY = 1;
     const [quantity, setQuantity] = useState(QUANTITY);
@@ -20,6 +22,10 @@ const CartItems: React.FC<{
         props.setDecermentQuantity(quantity, Number(props.price));
     };
 
+    const handleRemoveEvent: React.MouseEventHandler = () => {
+        props.onRemoveCart(props.id);
+    };
+
     return (
         <Fragment>
             <div className="card m-4">
@@ -31,7 +37,7 @@ const CartItems: React.FC<{
                         <div className="card-body">
                             <div className="row align-items-center">
                                 <div className="col-sm-3 text-center">
-                                    <div className="card-title fs-2">{props.title}</div>
+                                    <div className="card-title fs-4">{props.title}</div>
                                 </div>
                                 <div className="col-sm-4 text-center">
                                     <div className="fs-2">Cart Quantity</div>
@@ -49,7 +55,7 @@ const CartItems: React.FC<{
                                     <div className="card-text fs-4">₹ {props.price}</div>
                                 </div>
                                 <div className="col-sm-2 text-center">
-                                    <button title="removeItem" type="button" className="btn btn-danger">
+                                    <button onClick={handleRemoveEvent} title="removeItem" type="button" className="btn btn-danger">
                                         <i className="bi bi-trash">{" Remove "}</i>
                                     </button>
                                 </div>

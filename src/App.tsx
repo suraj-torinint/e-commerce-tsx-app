@@ -31,10 +31,10 @@ const App = () => {
     const setData = (obj: storeDatatype[]) => {
         let updatedData = [...getData, ...obj];
         setGetData(updatedData);
-    };
+    }; // not required while posting the data since we are getting data from api
 
     const handleRemove = (id: number) => {
-        setGetData((prevData) => {
+        setItemData((prevData) => {
             return prevData.filter((item) => item.id !== id);
         });
     };
