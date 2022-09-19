@@ -13,24 +13,20 @@ const Cart = () => {
     const [totalQuantity, setTotalQuantity] = useState(0);
     let items: storeDatatype[] = [];
     let price = 0;
-    const [totalPrice, setTotalPrice] = useState(price);
-
+    
     useEffect(() => {
         StoreData.getCart().then((data) => setCart(data));
         StoreData.getCart().then((data) => setTotalQuantity(data.length));
         return () => {};
     }, []);
-
+    
     for (const iterator of cartItems.entries()) {
         let element: storeDatatype[] = [updatedData.bigdata.find((product) => product.id === iterator[1].id)!];
         items = [...items, ...element];
     }
-
-    price += items
-        .map((product) => Number(product.price))
-        .reduce((a, b) => {
-            return a + b;
-        }, 0);
+    
+    items.map((product) => (price += product.price));
+    const [totalPrice, setTotalPrice] = useState(price);
 
     const handleIncrement = (quantity: number, price: number) => {
         setTotalQuantity((prevQuantity: number) => prevQuantity + 1);
@@ -64,14 +60,14 @@ const Cart = () => {
             <div className="card my-3 text-center">
                 <div className="card-title m-3 fs-3">Total Cart Items {totalQuantity}</div>
             </div>
-            {items.map((product : {id?: number | any, title:string, price: number, image : string}, index) => (
+            {items.map((product: { id?: number | any; title: string; price: number; image: string }, index) => (
                 <CartItems key={index} id={product.id} title={product.title} price={product.price} image={product.image} setIncrementQuantity={handleIncrement} setDecermentQuantity={handleDecrement} onRemoveCart={handleRemoveCart} />
             ))}
             <div className="row">
                 <div className="col"></div>
                 <div className="col-sm-6">
                     <div className="card">
-                        <div className="card-body">Total Price : ₹ {totalPrice}</div>
+                        <div className="card-body">Total Price : ₹ {price+totalPrice}</div>
                     </div>
                 </div>
             </div>

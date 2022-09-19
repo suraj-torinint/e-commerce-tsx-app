@@ -12,7 +12,7 @@ const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: numb
         setBtnDisabled("disabled");
         let totalCount = itemArray.length + 1;
         // cart post method
-        StoreData.postCart({ id: props.id });
+        StoreData.postCart({ id: props.id, price: props.price });
         // let cartNum = totalCount;
         setCartIcon(<i className="bi bi-cart-check-fill"></i>);
         itemArray.push(props.id);

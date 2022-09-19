@@ -12,10 +12,11 @@ export interface storeDatatype {
 
 export interface cartDataType {
     id: number;
+    price: number;
 }
 
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL ,
+    baseURL: process.env.REACT_APP_BASE_URL,
     timeout: 5000,
 });
 
