@@ -1,130 +1,187 @@
-import React, { useRef, useState } from "react";
+import React, { useReducer } from "react";
+import StoreData, { storeDatatype } from "../Data/service";
 // import ProductContext from "../Context/product-data";
-import StoreData from "../Data/service";
+// import { storeDatatype } from "../Data/service";
+
+interface initialDataType {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    image: string;
+    rating: {
+        rate: number;
+    };
+    category: string;
+    idTouched: boolean;
+    titleTouched: boolean;
+    descriptionTouched: boolean;
+    priceTouched: boolean;
+    imageTouched: boolean;
+    ratingTouched: boolean;
+    categoryTouched: boolean;
+}
+
+let initialData: initialDataType = {
+    id: 0,
+    title: "",
+    description: "",
+    price: 0,
+    image: "",
+    rating: { rate: 0 },
+    category: "",
+    idTouched: false,
+    titleTouched: false,
+    descriptionTouched: false,
+    priceTouched: false,
+    imageTouched: false,
+    ratingTouched: false,
+    categoryTouched: false,
+};
+
+interface actionType {
+    type: string;
+    payload: any;
+}
+
+const reducer = (state: initialDataType, action: actionType) => {
+    switch (action.type) {
+        case "id":
+            return { ...state, id: action.payload };
+        case "title":
+            return { ...state, title: action.payload };
+        case "description":
+            return { ...state, description: action.payload };
+        case "price":
+            return { ...state, price: action.payload };
+        case "image":
+            return { ...state, image: action.payload };
+        case "rating":
+            return { ...state, rating: { rate: action.payload } };
+        case "category":
+            return { ...state, category: action.payload };
+        case "idTouched":
+            return { ...state, idTouched: action.payload };
+        case "titleTouched":
+            return { ...state, titleTouched: action.payload };
+        case "descriptionTouched":
+            return { ...state, descriptionTouched: action.payload };
+        case "priceTouched":
+            return { ...state, priceTouched: action.payload };
+        case "imageTouched":
+            return { ...state, imageTouched: action.payload };
+        case "ratingTouched":
+            return { ...state, ratingTouched: action.payload };
+        case "categoryTouched":
+            return { ...state, categoryTouched: action.payload };
+        default:
+            throw new Error();
+    }
+};
 
 const NewProduct = () => {
-    const handleId = useRef<HTMLInputElement>(null);
-    const handleTitle = useRef<HTMLInputElement>(null);
-    const handleImage = useRef<HTMLInputElement>(null);
-    const handleDesc = useRef<HTMLTextAreaElement>(null);
-    const handlePrice = useRef<HTMLInputElement>(null);
-    const handleRating = useRef<HTMLInputElement>(null);
-    const handleCategory = useRef<HTMLInputElement>(null);
-    const disabledRef = useRef<HTMLInputElement>(null);
     // const [isvalid, setIsValid] = useState(false);
-    const [touched, setTouched] = useState(false);
+    const [state, dispatch] = useReducer(reducer, initialData);
+
+    const handleId = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch({ type: "id", payload: event.target.value });
+        dispatch({ type: "idTouched", payload: true });
+    };
+    const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch({ type: "title", payload: event.target.value });
+        dispatch({ type: "titleTouched", payload: true });
+    };
+    const handleDesc = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        dispatch({ type: "description", payload: event.target.value });
+        dispatch({ type: "descriptionTouched", payload: true });
+    };
+    const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch({ type: "image", payload: event.target.value });
+        dispatch({ type: "imageTouched", payload: true });
+    };
+    const handlePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch({ type: "price", payload: event.target.value });
+        dispatch({ type: "priceTouched", payload: true });
+    };
+    const handleRating = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch({ type: "rating", payload: event.target.value });
+        dispatch({ type: "ratingTouched", payload: true });
+    };
+    const handleCategory = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch({ type: "category", payload: event.target.value });
+        dispatch({ type: "categoryTouched", payload: true });
+    };
 
     // valid
-    const validID = handleId.current?.value.length !== 0;
-    const validTitle = handleTitle.current?.value.length !== 0;
-    const validDesc = handleDesc.current?.value.length !== 0;
-    const validPrice = handlePrice.current?.value.length !== 0;
-    const validImage = handleImage.current?.value.length !== 0;
-    const validRating = handleRating.current?.value.length !== 0;
-    const validCategory = handleCategory.current?.value.length !== 0;
+    const validId = state.id !== "";
+    const validTitle = state.title.trim() !== "";
+    const validDesc = state.description.trim() !== "";
+    const validPrice = state.price !== "";
+    const validImage = state.image.trim() !== "";
+    const validRating = state.rating.rate !== "";
+    const validCategory = state.category.trim() !== "";
 
     // Invalid
-    const invalidID = !validID && touched;
-    const invalidTitle = !validTitle && touched;
-    const invalidDesc = !validDesc && touched;
-    const invalidImage = !validImage && touched;
-    const invalidPrice = !validPrice && touched;
-    const invalidRating = !validRating && touched;
-    const invalidCategory = !validCategory && touched;
-
-    const clearForm = (event: React.FormEvent) => {
-        event.preventDefault();
-        handleId.current!.value = "";
-        handleTitle.current!.value = "";
-        handleImage.current!.value = "";
-        handleDesc.current!.value = "";
-        handlePrice.current!.value = "";
-        handleRating.current!.value = "";
-        handleCategory.current!.value = "";
-    };
-
-    const handleInputID = () => {
-        setTouched(true);
-        if (handleId.current?.value.length === 0) {
-            return invalidID;
-        }
-    };
-    const handleInputTitle = () => {
-        setTouched(true);
-        if (handleTitle.current?.value.length === 0) {
-            return invalidTitle;
-        }
-    };
-    const handleInputDesc = () => {
-        setTouched(true);
-        if (handleDesc.current?.value.length === 0) {
-            return invalidDesc;
-        }
-    };
-    const handleInputImage = () => {
-        setTouched(true);
-        if (handleImage.current?.value.length === 0) {
-            return invalidImage;
-        }
-    };
-    const handleInputPrice = () => {
-        setTouched(true);
-        if (handlePrice.current?.value.length === 0) {
-            return invalidPrice;
-        }
-    };
-    const handleInputRating = () => {
-        setTouched(true);
-        if (handleRating.current?.value.length === 0) {
-            return invalidRating;
-        }
-    };
-    const handleInputCategory = () => {
-        setTouched(true);
-        if (handleCategory.current?.value.length === 0) {
-            return invalidCategory;
-        }
-    };
+    const invalidID = !validId && state.idTouched;
+    const invalidTitle = !validTitle && state.titleTouched;
+    const invalidDesc = !validDesc && state.descriptionTouched;
+    const invalidImage = !validImage && state.imageTouched;
+    const invalidPrice = !validPrice && state.priceTouched;
+    const invalidRating = !validRating && state.ratingTouched;
+    const invalidCategory = !validCategory && state.categoryTouched;
 
     // const updatedData = useContext(ProductContext);
 
     const handleForm = (event: React.FormEvent) => {
         event.preventDefault();
-        setTouched(true);
-        if (
-            handleId.current?.value.trim().length === 0 ||
-            handleTitle.current?.value.trim().length === 0 ||
-            handleImage.current?.value.trim().length === 0 ||
-            handlePrice.current?.value.trim().length === 0 ||
-            handleDesc.current?.value.trim().length === 0 ||
-            handleRating.current?.value.trim().length === 0 ||
-            handleCategory.current?.value.trim().length === 0 ||
-            disabledRef.current?.value.length === 0
-        ) {
-            return [invalidID, invalidDesc, invalidImage, invalidPrice, invalidRating, invalidTitle, invalidCategory];
+        dispatch({ type: "idTouched", payload: true });
+        dispatch({ type: "titleTouched", payload: true });
+        dispatch({ type: "descriptionTouched", payload: true });
+        dispatch({ type: "imageTouched", payload: true });
+        dispatch({ type: "priceTouched", payload: true });
+        dispatch({ type: "ratingTouched", payload: true });
+        dispatch({ type: "categoryTouched", payload: true });
+        if (!validId || !validTitle || !validDesc || !validPrice || !validImage || !validRating || !validCategory) {
+            return;
         }
 
-        const newItem = {
-            id: Number(handleId.current?.value),
-            title: handleTitle.current!.value,
-            description: handleDesc.current!.value,
-            image: handleImage.current!.value,
-            price: Number(handlePrice.current!.value),
-            rating: { rate: Number(handleRating.current!.value) },
-            category: handleCategory.current!.value,
+        const newItem:storeDatatype = {
+            title: state.title,
+            description: state.description,
+            image: state.image,
+            price: parseFloat(state.price),
+            rating: { rate: parseFloat(state.rating.rate) },
+            category: state.category,
         };
+        // console.log(newItem);
         StoreData.createPost(newItem);
-
         // updatedData.updatedData([newItem]);
-        handleId.current!.value = "";
-        handleTitle.current!.value = "";
-        handleImage.current!.value = "";
-        handleDesc.current!.value = "";
-        handlePrice.current!.value = "";
-        handleRating.current!.value = "";
-        handleCategory.current!.value = "";
+        dispatch({ type: "id", payload: "" });
+        dispatch({ type: "title", payload: "" });
+        dispatch({ type: "description", payload: "" });
+        dispatch({ type: "image", payload: "" });
+        dispatch({ type: "price", payload: "" });
+        dispatch({ type: "rating", payload: "" });
+        dispatch({ type: "category", payload: "" });
 
-        setTouched(false);
+        dispatch({ type: "idTouched", payload: false });
+        dispatch({ type: "titleTouched", payload: false });
+        dispatch({ type: "descriptionTouched", payload: false });
+        dispatch({ type: "imageTouched", payload: false });
+        dispatch({ type: "priceTouched", payload: false });
+        dispatch({ type: "ratingTouched", payload: false });
+        dispatch({ type: "categoryTouched", payload: false });
+    };
+
+    const clearForm = (event: React.MouseEvent) => {
+        event.preventDefault();
+        dispatch({ type: "id", payload: "" });
+        dispatch({ type: "title", payload: "" });
+        dispatch({ type: "description", payload: "" });
+        dispatch({ type: "image", payload: "" });
+        dispatch({ type: "price", payload: "" });
+        dispatch({ type: "rating", payload: "" });
+        dispatch({ type: "category", payload: "" });
     };
 
     return (
@@ -137,53 +194,53 @@ const NewProduct = () => {
                             <label htmlFor="inputId" className="form-label">
                                 Id
                             </label>
-                            <input onBlur={handleInputID} ref={handleId} type="number" name="id" className="form-control" id="inputId" />
+                            <input onBlur={handleId} onChange={handleId} type="number" name="id" className="form-control" id="inputId" />
                             {invalidID && <p className="text-danger">ID required</p>}
                         </div>
                         <div className="col-md-5">
                             <label htmlFor="inputEmail4" className="form-label">
                                 Title
                             </label>
-                            <input onBlur={handleInputTitle} ref={handleTitle} type="text" name="title" className="form-control" id="inputEmail4" />
+                            <input onBlur={handleTitle} onChange={handleTitle} type="text" name="title" className="form-control" id="inputEmail4" />
                             {invalidTitle && <p className="text-danger">title required</p>}
                         </div>
                         <div className="col-md-5">
                             <label htmlFor="inputPassword4" className="form-label">
                                 Price
                             </label>
-                            <input onBlur={handleInputPrice} ref={handlePrice} type="text" name="price" className="form-control" id="inputPassword4" />
+                            <input onBlur={handlePrice} onChange={handlePrice} type="text" name="price" className="form-control" id="inputPassword4" />
                             {invalidPrice && <p className="text-danger">Price required</p>}
                         </div>
                         <div className="">
                             <label htmlFor="exampleFormControlTextarea1" className="form-label">
                                 Description
                             </label>
-                            <textarea onBlur={handleInputDesc} ref={handleDesc} name="desc" className="form-control" id="exampleFormControlTextarea1" rows={3}></textarea>
+                            <textarea onBlur={handleDesc} onChange={handleDesc} name="desc" className="form-control" id="exampleFormControlTextarea1" rows={3}></textarea>
                             {invalidDesc && <p className="text-danger">Add some Descriptin</p>}
                         </div>
                         <div className="col-md-6">
                             <label htmlFor="inputCity" className="form-label">
                                 Image
                             </label>
-                            <input onBlur={handleInputImage} ref={handleImage} placeholder="Enter Image link" name="image" type="text" className="form-control" id="inputCity" />
+                            <input onBlur={handleImage} onChange={handleImage} placeholder="Enter Image link" name="image" type="text" className="form-control" id="inputCity" />
                             {invalidImage && <p className="text-danger">Image link is required</p>}
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="inputState" className="form-label">
                                 Rating
                             </label>
-                            <input onBlur={handleInputRating} ref={handleRating} type="text" name="rating" className="form-control" id="inputState" />
+                            <input onBlur={handleRating} onChange={handleRating} type="text" name="rating" className="form-control" id="inputState" />
                             {invalidRating && <p className="text-danger">Rating is required</p>}
                         </div>
                         <div className="col-md-3">
                             <label htmlFor="inputZip" className="form-label">
                                 Category
                             </label>
-                            <input onBlur={handleInputCategory} ref={handleCategory} type="text" name="category" className="form-control" id="inputZip" />
+                            <input onBlur={handleCategory} onChange={handleCategory} type="text" name="category" className="form-control" id="inputZip" />
                             {invalidCategory && <p className="text-danger">Category is required</p>}
                         </div>
                         <div className="d-none">
-                            <input type="text" value="React Test" ref={disabledRef} disabled />
+                            <input type="text" value="React Test" disabled />
                         </div>
 
                         <div className="col-12">

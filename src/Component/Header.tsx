@@ -1,18 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import ProductContext from "../Context/product-data";
 import StoreData from "../Data/service";
 
 const Header = () => {
-    const cartNumber = useContext(ProductContext);
-    console.log(cartNumber.cartData);
     const [cart, setcart] = useState(0);
     useEffect(() => {
-        console.log("Mounted");
+        // console.log("Mounted");
         // setcart(cartNumber.cartData);
         StoreData.getCart().then((data) => setcart(data.length));
         return () => {
-            console.log("Unmounted");
+            // console.log("Unmounted");
         };
     });
 

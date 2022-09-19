@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 export interface storeDatatype {
-    id: number;
+    id?: number;
     title: string;
     description: string;
     price: number;

@@ -17,9 +17,9 @@ const Products = () => {
                     {newData.onload ? (
                         <Spinner />
                     ) : (
-                        newData.bigdata.map((item: { id: number; image: string; title: string; description: string; price: number; rating: { rate: number }; category: string }) => (
+                        newData.bigdata.map((item: { id?: number | any; image: string; title: string; description: string; price: number; rating: { rate: number }; category: string }, index) => (
                             <ProductCard
-                                key={item.id}
+                                key={index}
                                 id={item.id}
                                 image={item.image}
                                 title={item.title}

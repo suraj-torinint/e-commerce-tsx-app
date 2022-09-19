@@ -64,8 +64,8 @@ const Cart = () => {
             <div className="card my-3 text-center">
                 <div className="card-title m-3 fs-3">Total Cart Items {totalQuantity}</div>
             </div>
-            {items.map((product) => (
-                <CartItems key={product.id} id={product.id} title={product.title} price={product.price} image={product.image} setIncrementQuantity={handleIncrement} setDecermentQuantity={handleDecrement} onRemoveCart={handleRemoveCart} />
+            {items.map((product : {id?: number | any, title:string, price: number, image : string}, index) => (
+                <CartItems key={index} id={product.id} title={product.title} price={product.price} image={product.image} setIncrementQuantity={handleIncrement} setDecermentQuantity={handleDecrement} onRemoveCart={handleRemoveCart} />
             ))}
             <div className="row">
                 <div className="col"></div>
