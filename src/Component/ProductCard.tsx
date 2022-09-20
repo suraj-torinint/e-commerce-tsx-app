@@ -17,7 +17,6 @@ const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: numb
         setCartIcon(<i className="bi bi-cart-check-fill"></i>);
         itemArray.push(props.id);
         localStorage.setItem("cart", JSON.stringify(itemArray));
-        console.log(totalCount);
         props.setCart(totalCount);
     };
 
