@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import ProductContext from "../Context/product-data";
+import { productState } from "../Services/store";
 import ProductCard from "./ProductCard";
 import Spinner from "./Spinner";
 
@@ -8,16 +10,16 @@ const Products = () => {
     //     props.setCart(value);
     // };
 
-    const newData = useContext(ProductContext);
+    const newData = useSelector(productState);
 
     return (
         <>
             <div className="container">
                 <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 ">
-                    {newData.onload ? (
+                    {!newData ? (
                         <Spinner />
                     ) : (
-                        newData.bigdata.map((item: { id?: number | any; image: string; title: string; description: string; price: number; rating: { rate: number }; category: string }, index) => (
+                        newData.map((item: { id?: number | any; image: string; title: string; description: string; price: number; rating: { rate: number }; category: string }, index) => (
                             <ProductCard
                                 key={index}
                                 id={item.id}
@@ -27,8 +29,8 @@ const Products = () => {
                                 price={item.price}
                                 rating={item.rating}
                                 category={item.category}
-                                setCart={newData.setcart}
-                                removeBtnClicked={newData.onRemoveHandler.bind(null, item.id)}
+                                // setCart={newData.setcart}
+                                // removeBtnClicked={newData.onRemoveHandler.bind(null, item.id)}
                             />
                         ))
                     )}

@@ -250,6 +250,17 @@
         "rate": 4.5
       },
       "category": "Mobiles"
+    },
+    {
+      "title": "nothing Phone (1)",
+      "description": "smart Phone",
+      "image": "https://rukminim1.flixcart.com/image/312/312/l5h2xe80/mobile/4/7/l/-original-imagg4y3grhaxckf.jpeg?q=70",
+      "price": 27999,
+      "rating": {
+        "rate": 4.5
+      },
+      "category": "Mobiles",
+      "id": 22
     }
   ],
   "cart": [

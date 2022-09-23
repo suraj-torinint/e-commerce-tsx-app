@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import StoreData from "../Data/service";
 
 let itemArray: number[] = [];
-const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: number) => void; id: number; image: string; title: string; desc: string; price: number; rating: { rate: number }; category: string }> = (props) => {
+const ProductCard: React.FC<{ id: number; image: string; title: string; desc: string; price: number; rating: { rate: number }; category: string }> = (props) => {
     const [btnDisabled, setBtnDisabled] = useState<string>("");
     const [cartIcon, setCartIcon] = useState(<i className="bi bi-cart"></i>);
 
@@ -17,18 +17,21 @@ const ProductCard: React.FC<{ removeBtnClicked: () => void; setCart: (cart: numb
         setCartIcon(<i className="bi bi-cart-check-fill"></i>);
         itemArray.push(props.id);
         localStorage.setItem("cart", JSON.stringify(itemArray));
-        props.setCart(totalCount);
+        // props.setCart(totalCount);
     };
 
     // let width = props.width;
     // let height = props.height;
+    const removeBtnClicked = () => {
+        
+    }
 
     return (
         <>
             <div className={"col g-5 px-5"}>
                 <div className="card">
                     <div className="ps-3 pt-3">
-                        <button onClick={props.removeBtnClicked} type="button" className="btn btn-secondary">
+                        <button onClick={removeBtnClicked} type="button" className="btn btn-secondary">
                             <i className="bi bi-x-lg"></i>
                             <span className="visually-hidden">Button</span>
                         </button>
