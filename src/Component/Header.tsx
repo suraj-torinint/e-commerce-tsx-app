@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import StoreData from "../Data/service";
+import { cartAction } from "../Services/cart-reducer";
+import { cartState } from "../Services/store";
 
 const Header = () => {
-    const [cart, setcart] = useState(0);
+    const dispatch = useDispatch();
+    const cart = useSelector(cartState);
+    let totalCartItems = cart.carts.length
     useEffect(() => {
-        // console.log("Mounted");
-        // setcart(cartNumber.cartData);
-        StoreData.getCart().then((data) => setcart(data.length));
+        StoreData.getCart().then((data) => dispatch(cartAction.getCart(data)));
         return () => {
-            // console.log("Unmounted");
         };
-    });
+    }, [dispatch]);
 
     return (
         <>
@@ -37,7 +39,7 @@ const Header = () => {
                     <div>
                         <NavLink className="px-3 text-decoration-none text-dark" to="/cart">
                             Cart
-                            {cart !== 0 ? <span className="ms-1 badge bg-danger">{cart}</span> : " "}
+                            {totalCartItems > 0 ? <span className="ms-1 badge bg-danger">{totalCartItems}</span> : " "}
                         </NavLink>
                         <NavLink className="px-3 text-decoration-none text-dark" to="/wishlist">
                             Wish List

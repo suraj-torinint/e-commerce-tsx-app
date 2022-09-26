@@ -1,30 +1,25 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import StoreData from "../Data/service";
+import { storeDatatype } from "../Data/service";
+import { cartAction } from "../Services/cart-reducer";
 
-let itemArray: number[] = [];
-const ProductCard: React.FC<{ id: number; image: string; title: string; desc: string; price: number; rating: { rate: number }; category: string }> = (props) => {
+const ProductCard = (props: storeDatatype) => {
+    const dispatch = useDispatch();
+    let { id, image, title, description, price, rating, category } = props;
     const [btnDisabled, setBtnDisabled] = useState<string>("");
     const [cartIcon, setCartIcon] = useState(<i className="bi bi-cart"></i>);
 
-    const handleCart: React.MouseEventHandler = () => {
+    const handleCart = () => {
         setBtnDisabled("disabled");
-        let totalCount = itemArray.length + 1;
-        // cart post method
-        StoreData.postCart({ id: props.id, price: props.price });
-        // let cartNum = totalCount;
         setCartIcon(<i className="bi bi-cart-check-fill"></i>);
-        itemArray.push(props.id);
-        localStorage.setItem("cart", JSON.stringify(itemArray));
-        // props.setCart(totalCount);
+        let cartItem = { id: id, title: title, price: price, image: image, quantity: 1 };
+        let newcart = { totalQuantity: 1, totalPrice: price, carts: [cartItem] };
+        dispatch(cartAction.addToCart(newcart));
     };
 
-    // let width = props.width;
-    // let height = props.height;
-    const removeBtnClicked = () => {
-        
-    }
+    const removeBtnClicked = () => {};
 
     return (
         <>
@@ -37,29 +32,29 @@ const ProductCard: React.FC<{ id: number; image: string; title: string; desc: st
                         </button>
                     </div>
                     <div className="card-img text-center">
-                        <Link to={`/shop/${props.id}`}>
-                            <img src={props.image} className=" img-fluid px-3" style={{ height: "250px" }} alt="..." />
+                        <Link to={`/shop/${id}`}>
+                            <img src={image} className=" img-fluid px-3" style={{ height: "250px" }} alt="..." />
                         </Link>
                     </div>
                     <div className="card-body">
                         <div className="px-1 row">
                             <h5 className="card-title  col">
-                                <Link to={`/shop/${props.id}`} className={"text-decoration-none fw-bold text-dark"}>
-                                    {props.title.substring(0, 15)}...
+                                <Link to={`/shop/${id}`} className={"text-decoration-none fw-bold text-dark"}>
+                                    {title.substring(0, 15)}...
                                 </Link>
                             </h5>
 
                             <h5 className="card-title col-lg-4 justify-content-end">
-                                <Link to={`/shop/${props.id}`} className={"text-decoration-none text-dark"}>
-                                    ₹ {props.price}
+                                <Link to={`/shop/${id}`} className={"text-decoration-none text-dark"}>
+                                    ₹ {price}
                                 </Link>
                             </h5>
                         </div>
                         <div className="card-text ps-1">
                             <div>
-                                {props.rating.rate} <i className="bi bi-star"></i>
+                                {rating.rate} <i className="bi bi-star"></i>
                             </div>
-                            <div className="mb-2">{props.category}</div>
+                            <div className="mb-2">{category}</div>
                         </div>
                         <div className="row ps-3">
                             <button className="col-sm-5 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -70,14 +65,14 @@ const ProductCard: React.FC<{ id: number; image: string; title: string; desc: st
                                     <div className="modal-content">
                                         <div className="modal-header">
                                             <h5 className="modal-title" id="exampleModalLabel">
-                                                {props.title}
+                                                {title}
                                             </h5>
                                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div className="modal-body">
                                             <span className="text-uppercase fw-bold fs-3">Details</span>
                                             <br />
-                                            {props.desc}
+                                            {description}
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab excepturi accusamus explicabo sit? Delectus natus deserunt voluptatum qui? Accusantium, dolores nostrum corporis magnam dicta doloribus, ex
                                             debitis quibusdam vitae reprehenderit neque! Labore deserunt minima corrupti dolore obcaecati harum expedita doloremque ratione aut aspernatur? Blanditiis commodi sunt labore amet aliquid delectus.
                                         </div>

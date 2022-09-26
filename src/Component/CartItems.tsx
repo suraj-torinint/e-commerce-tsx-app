@@ -1,30 +1,22 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
+import { useDispatch } from "react-redux";
+import { cartAction } from "../Services/cart-reducer";
 
-const CartItems: React.FC<{
-    onRemoveCart: (id: number) => void;
-    setIncrementQuantity: (quantity: number, price: number) => void;
-    setDecermentQuantity: (quantity: number, price: number) => void;
-    title: string;
-    price: number;
-    image: string;
-    id: number;
-}> = (props) => {
-    let QUANTITY = 1;
-    const [quantity, setQuantity] = useState(QUANTITY);
-
+const CartItems: React.FC<{ title: string; price: number; quantity: number; image: string; id: number }> = (props) => {
+    const dispatch = useDispatch();
     const handleIncrement: React.MouseEventHandler = () => {
-        setQuantity((prevQuantity) => prevQuantity + 1);
-        props.setIncrementQuantity(quantity, Number(props.price));
+        let cartItem = { id: props.id, title: props.title, price: props.price, image: props.image, quantityu: 1 };
+        let newcart = { totalPrice: props.price, carts: [cartItem] };
+        dispatch(cartAction.addToCart(newcart));
     };
 
     const handleDecrement: React.MouseEventHandler = () => {
-        setQuantity((prevQuantity) => (prevQuantity !== 0 && prevQuantity > 1 ? prevQuantity - 1 : prevQuantity));
-        props.setDecermentQuantity(quantity, Number(props.price));
+        let cartItem = { id: props.id, title: props.title, price: props.price, image: props.image, quantity: 1 };
+        let newcart = { totalPrice: props.price, carts: [cartItem] };
+        props.quantity > 1 && dispatch(cartAction.decreaseCart(newcart));
     };
 
-    const handleRemoveEvent: React.MouseEventHandler = () => {
-        props.onRemoveCart(props.id);
-    };
+    const handleRemoveEvent: React.MouseEventHandler = () => {};
 
     return (
         <Fragment>
@@ -45,7 +37,7 @@ const CartItems: React.FC<{
                                         <button onClick={handleDecrement} title="increase" type="button" className="btn btn-outline-secondary">
                                             <span className="mx-1">-</span>
                                         </button>
-                                        <span className="mx-4">{quantity}</span>
+                                        <span className="mx-4">{Number(props.quantity)}</span>
                                         <button onClick={handleIncrement} title="increase" type="button" className="btn btn-outline-secondary">
                                             <i className="bi bi-plus-lg"></i>
                                         </button>
