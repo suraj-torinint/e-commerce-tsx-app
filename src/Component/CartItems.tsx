@@ -15,8 +15,12 @@ const CartItems: React.FC<{ title: string; price: number; quantity: number; imag
         let newcart = { totalPrice: props.price, carts: [cartItem] };
         props.quantity > 1 && dispatch(cartAction.decreaseCart(newcart));
     };
-
-    const handleRemoveEvent: React.MouseEventHandler = () => {};
+    
+    const handleRemoveEvent: React.MouseEventHandler = () => {
+        let cartItem = { id: props.id, title: props.title, price: props.price, image: props.image, quantity: 1 };
+        let cartData = { totalPrice: props.price, carts: [cartItem] };
+        dispatch(cartAction.removeCart(cartData))
+    };
 
     return (
         <Fragment>
