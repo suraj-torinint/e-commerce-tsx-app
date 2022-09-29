@@ -3,7 +3,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { storeDatatype } from "../Data/service";
-import { cartAction } from "../Services/cart-reducer";
+import { AddToCartAction } from "../Services/actions";
+import { initialStateType } from "../Services/cart-reducer";
 
 const ProductCard = (props: storeDatatype) => {
     const dispatch = useDispatch();
@@ -15,8 +16,8 @@ const ProductCard = (props: storeDatatype) => {
         setBtnDisabled("disabled");
         setCartIcon(<i className="bi bi-cart-check-fill"></i>);
         let cartItem = { id: id, title: title, price: price, image: image, quantity: 1 };
-        let newcart = { totalQuantity: 1, totalPrice: price, carts: [cartItem] };
-        dispatch(cartAction.addToCart(newcart));
+        let newcart = { totalQuantity: 1, totalPrice: price, carts: [cartItem] as initialStateType["carts"] };
+        dispatch(AddToCartAction(newcart) as any);
     };
 
     const removeBtnClicked = () => {};

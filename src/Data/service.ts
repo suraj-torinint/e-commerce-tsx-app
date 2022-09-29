@@ -39,6 +39,7 @@ const StoreData = {
     // deletePost: (id: number): Promise<void> => requests.delete(`product/${id}`),
     getCart: (): Promise<initialStateType[]> => requests.get("cart"),
     postCart: (cart: initialStateType): Promise<initialStateType[]> => requests.post("cart", cart),
+    updateCart: (cart: initialStateType): Promise<initialStateType[]> => requests.put(`cart`, cart),
     deleteCart: (id: number): Promise<void> => requests.delete(`cart/${id}`),
 };
 

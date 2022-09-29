@@ -18,4 +18,8 @@ export const cartState = (state: RootState) => {
     return state.cartReducer;
 };
 
+// create your own dispatch function reference with custom typings
+export const dispatchStore = store.dispatch as typeof store.dispatch
+
+
 export default store;
