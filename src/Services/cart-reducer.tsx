@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import StoreData from "../Data/service";
 
 export interface initialStateType {
     [x: string]: any;
@@ -22,54 +21,13 @@ const cartSlices = createSlice({
             return action.payload;
         },
         addToCart(state, action) {
-            const newitem: initialStateType = action.payload;
-            let dataCart = newitem.carts[0];
-            let existingItem = state.carts.find((cart) => cart.id === dataCart.id);
-            if (!existingItem) {
-                state.totalQuantity += 1;
-                state.totalPrice += dataCart.price;
-                state.carts.push({
-                    id: dataCart.id,
-                    title: dataCart.title,
-                    image: dataCart.image,
-                    price: dataCart.price,
-                    quantity: dataCart.quantity,
-                });
-            } else {
-                existingItem.quantity += 1;
-                state.totalQuantity += 1;
-                state.totalPrice += dataCart.price;
-            }
-            StoreData.postCart({ totalQuantity: state.totalQuantity, totalPrice: state.totalPrice, carts: state.carts });
+            return action.payload;
         },
         decreaseCart(state, action) {
-            const item: initialStateType = action.payload;
-            let cartItem = item.carts[0];
-            let existingItem = state.carts.find((cart) => cart.id === cartItem.id);
-            if (existingItem) {
-                state.totalQuantity -= 1;
-                existingItem.quantity -= 1;
-                state.totalPrice -= cartItem.price;
-            } else {
-                console.log("Item not found");
-            }
-            StoreData.postCart({ totalQuantity: state.totalQuantity, totalPrice: state.totalPrice, carts: state.carts });
+            return action.payload;
         },
         removeCart(state, action) {
-            let item: initialStateType = action.payload;
-            let removeItem = item.carts[0];
-            let existingItem = state.carts.find((cart) => cart.id === removeItem.id);
-            let filteredItems = state.carts.filter((cart) => cart.id !== removeItem.id);
-
-            if (existingItem) {
-                state.totalQuantity -= existingItem.quantity;
-                state.totalPrice -= existingItem.quantity * existingItem.price;
-                while(state.carts.length > 0) {
-                    state.carts.pop();
-                }
-                filteredItems.map((data) => state.carts.push(data));
-            }
-            StoreData.postCart({ totalQuantity: state.totalQuantity, totalPrice: state.totalPrice, carts: state.carts });
+            return action.payload;
         },
     },
 });

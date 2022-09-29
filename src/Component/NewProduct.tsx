@@ -81,10 +81,6 @@ const NewProduct = () => {
     const productDispatch = useDispatch();
     const [state, dispatch] = useReducer(reducer, initialData);
 
-    const handleId = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch({ type: "id", payload: event.target.value });
-        dispatch({ type: "idTouched", payload: true });
-    };
     const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch({ type: "title", payload: event.target.value });
         dispatch({ type: "titleTouched", payload: true });
