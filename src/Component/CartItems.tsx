@@ -1,25 +1,27 @@
 import React, { Fragment } from "react";
-import { useDispatch } from "react-redux";
-import { cartAction } from "../Services/cart-reducer";
+import { AddToCartAction, DecreaseCartAction, RemoveCartAction } from "../Services/actions";
+import { initialStateType } from "../Services/cart-reducer";
+import { dispatchStore } from "../Services/store";
 
 const CartItems: React.FC<{ title: string; price: number; quantity: number; image: string; id: number }> = (props) => {
-    const dispatch = useDispatch();
+    // const dispatch = useAppDispatch();
     const handleIncrement: React.MouseEventHandler = () => {
-        let cartItem = { id: props.id, title: props.title, price: props.price, image: props.image, quantityu: 1 };
-        let newcart = { totalPrice: props.price, carts: [cartItem] };
-        dispatch(cartAction.addToCart(newcart));
+        let cartItem = { id: props.id, title: props.title, price: props.price, image: props.image, quantity: 1 };
+        let newcart: initialStateType = { totalQuantity: 1, totalPrice: props.price, carts: [cartItem] };
+        // debugger
+        dispatchStore(AddToCartAction(newcart));
     };
 
     const handleDecrement: React.MouseEventHandler = () => {
         let cartItem = { id: props.id, title: props.title, price: props.price, image: props.image, quantity: 1 };
-        let newcart = { totalPrice: props.price, carts: [cartItem] };
-        props.quantity > 1 && dispatch(cartAction.decreaseCart(newcart));
+        let newcart: initialStateType = { totalQuantity: 1, totalPrice: props.price, carts: [cartItem] };
+        props.quantity > 1 && dispatchStore(DecreaseCartAction(newcart));
     };
-    
+
     const handleRemoveEvent: React.MouseEventHandler = () => {
         let cartItem = { id: props.id, title: props.title, price: props.price, image: props.image, quantity: 1 };
-        let cartData = { totalPrice: props.price, carts: [cartItem] };
-        dispatch(cartAction.removeCart(cartData))
+        let cartData: initialStateType = { totalQuantity: 1, totalPrice: props.price, carts: [cartItem] };
+        dispatchStore(RemoveCartAction(cartData));
     };
 
     return (

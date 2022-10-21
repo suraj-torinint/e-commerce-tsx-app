@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import StoreData from "../Data/service";
+import { useAppDispatch, useAppSelector } from "../Services/custom-hooks";
 import { productAction } from "../Services/product-reducers";
 import { productState } from "../Services/store";
 import ProductCard from "./ProductCard";
@@ -8,7 +8,7 @@ import Spinner from "./Spinner";
 
 const Products = () => {
     const [loading, setLoading] = useState(true);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const getData = async () =>
@@ -25,7 +25,7 @@ const Products = () => {
             throw new Error("Failed to get the data");
         }
     }, [dispatch]);
-    const newData = useSelector(productState);
+    const newData = useAppSelector(productState);
 
     return (
         <>

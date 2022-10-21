@@ -1,12 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { storeDatatype } from "../Data/service";
-import { cartAction } from "../Services/cart-reducer";
+import { AddToCartAction } from "../Services/actions";
+import { initialStateType } from "../Services/cart-reducer";
+import { useAppDispatch } from "../Services/custom-hooks";
 
 const ProductCard = (props: storeDatatype) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     let { id, image, title, description, price, rating, category } = props;
     const [btnDisabled, setBtnDisabled] = useState<string>("");
     const [cartIcon, setCartIcon] = useState(<i className="bi bi-cart"></i>);
@@ -15,15 +16,15 @@ const ProductCard = (props: storeDatatype) => {
         setBtnDisabled("disabled");
         setCartIcon(<i className="bi bi-cart-check-fill"></i>);
         let cartItem = { id: id, title: title, price: price, image: image, quantity: 1 };
-        let newcart = { totalQuantity: 1, totalPrice: price, carts: [cartItem] };
-        dispatch(cartAction.addToCart(newcart));
+        let newcart = { totalQuantity: 1, totalPrice: price, carts: [cartItem] as initialStateType["carts"] };
+        dispatch(AddToCartAction(newcart));
     };
 
     const removeBtnClicked = () => {};
 
     return (
         <>
-            <div className={"col g-5 px-5"}>
+            <div className={"col g-5 px-5"} data-testid={`product-${id}`}>
                 <div className="card">
                     <div className="ps-3 pt-3">
                         <button onClick={removeBtnClicked} type="button" className="btn btn-secondary">

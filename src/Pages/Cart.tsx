@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItems from "../Component/CartItems";
 import StoreData from "../Data/service";
 import { cartAction } from "../Services/cart-reducer";
+import { useAppDispatch, useAppSelector } from "../Services/custom-hooks";
 import { cartState } from "../Services/store";
 
 const Cart = () => {
-    const dispatch = useDispatch();
-    const cartData = useSelector(cartState);
+    const dispatch = useAppDispatch();
+    const cartData = useAppSelector(cartState);
     const cartItems = cartData.carts.filter((cart) => cart.id !== 0);
 
     useEffect(() => {

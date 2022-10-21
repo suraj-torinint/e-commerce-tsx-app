@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
-import { useDispatch } from "react-redux";
 import StoreData, { storeDatatype } from "../Data/service";
+import { useAppDispatch } from "../Services/custom-hooks";
 import { productAction } from "../Services/product-reducers";
 
 interface initialDataType {
@@ -78,13 +78,9 @@ const reducer = (state: initialDataType, action: actionType) => {
 };
 
 const NewProduct = () => {
-    const productDispatch = useDispatch();
+    const productDispatch = useAppDispatch();
     const [state, dispatch] = useReducer(reducer, initialData);
 
-    const handleId = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch({ type: "id", payload: event.target.value });
-        dispatch({ type: "idTouched", payload: true });
-    };
     const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch({ type: "title", payload: event.target.value });
         dispatch({ type: "titleTouched", payload: true });

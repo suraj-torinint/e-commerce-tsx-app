@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import StoreData from "../Data/service";
 import { cartAction } from "../Services/cart-reducer";
+import { useAppDispatch, useAppSelector } from "../Services/custom-hooks";
 import { cartState } from "../Services/store";
 
 const Header = () => {
-    const dispatch = useDispatch();
-    const cart = useSelector(cartState);
+    const dispatch = useAppDispatch();
+    const cart = useAppSelector(cartState);
     let totalCartItems = cart.carts.length
     useEffect(() => {
         StoreData.getCart().then((data) => dispatch(cartAction.getCart(data)));
