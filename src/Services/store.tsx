@@ -2,7 +2,7 @@ import { combineReducers, configureStore, PreloadedState } from "@reduxjs/toolki
 import cartSlices from "./cart-reducer";
 import productSlice from "./product-reducers";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     productReducer: productSlice.reducer,
     cartReducer: cartSlices.reducer,
 });

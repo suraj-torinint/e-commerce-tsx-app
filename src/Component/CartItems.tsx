@@ -1,27 +1,28 @@
 import React, { Fragment } from "react";
 import { AddToCartAction, DecreaseCartAction, RemoveCartAction } from "../Services/actions";
 import { initialStateType } from "../Services/cart-reducer";
-import { dispatchStore } from "../Services/store";
+import { useAppDispatch } from "../Services/custom-hooks";
+// import { dispatch } from "../Services/store";
 
 const CartItems: React.FC<{ title: string; price: number; quantity: number; image: string; id: number }> = (props) => {
-    // const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
     const handleIncrement: React.MouseEventHandler = () => {
         let cartItem = { id: props.id, title: props.title, price: props.price, image: props.image, quantity: 1 };
         let newcart: initialStateType = { totalQuantity: 1, totalPrice: props.price, carts: [cartItem] };
         // debugger
-        dispatchStore(AddToCartAction(newcart));
+        dispatch(AddToCartAction(newcart));
     };
 
     const handleDecrement: React.MouseEventHandler = () => {
         let cartItem = { id: props.id, title: props.title, price: props.price, image: props.image, quantity: 1 };
         let newcart: initialStateType = { totalQuantity: 1, totalPrice: props.price, carts: [cartItem] };
-        props.quantity > 1 && dispatchStore(DecreaseCartAction(newcart));
+        props.quantity > 1 && dispatch(DecreaseCartAction(newcart));
     };
 
     const handleRemoveEvent: React.MouseEventHandler = () => {
         let cartItem = { id: props.id, title: props.title, price: props.price, image: props.image, quantity: 1 };
         let cartData: initialStateType = { totalQuantity: 1, totalPrice: props.price, carts: [cartItem] };
-        dispatchStore(RemoveCartAction(cartData));
+        dispatch(RemoveCartAction(cartData));
     };
 
     return (
