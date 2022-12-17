@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import CartItems from "../Component/CartItems";
-import StoreData from "../Data/service";
-import { cartAction } from "../Services/cart-reducer";
+import { GetCart } from "../Services/actions";
 import { useAppDispatch, useAppSelector } from "../Services/custom-hooks";
 import { cartState } from "../Services/store";
 
@@ -12,8 +11,7 @@ const Cart = () => {
     const cartItems = cartData.carts.filter((cart) => cart.id !== 0);
 
     useEffect(() => {
-        StoreData.getCart().then((data) => dispatch(cartAction.getCart(data)));
-        return () => {};
+        dispatch(GetCart())
     }, [dispatch]);
 
     if (cartData.carts.length <= 0) {

@@ -3,6 +3,17 @@ import StoreData from "../Data/service";
 import { cartAction, initialStateType } from "./cart-reducer";
 import store from "./store";
 
+export const GetCart = () => {
+    return async (dispatch:Dispatch) => {
+        try{
+            let res = await StoreData.getCart()
+            dispatch(cartAction.getCart(res))
+        } catch (error) {
+            console.log("Something went wrong", error);
+        }
+    }
+}
+
 export const AddToCartAction = (cartData: initialStateType) => {
     return async (dispatch: Dispatch) => {
         // let response = dispatch(cartAction.addToCart(cartData));
